@@ -7,13 +7,18 @@ import { Character } from '@app/character-info/character';
   styleUrls: ['./character-info.component.scss']
 })
 export class CharacterInfoComponent implements OnInit {
-  currentCharacter: Character = new Character('Arashar', 42);
+  characterArashar: Character = new Character({
+    name: 'Arashar',
+    alliance: 'Zenith',
+    xp: 42
+  });
+  openAll = true;
 
   constructor() {}
 
   ngOnInit() {}
 
   onGainXp(): void {
-    this.currentCharacter.gainXP(2);
+    this.characterArashar.gainXP(2);
   }
 }
