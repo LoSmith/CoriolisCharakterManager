@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Character } from '@app/character-info/character';
 
 @Component({
   selector: 'app-character-info',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./character-info.component.scss']
 })
 export class CharacterInfoComponent implements OnInit {
+  currentCharacter: Character = new Character('Arashar', 42);
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  onGainXp(): void {
+    this.currentCharacter.gainXP(2);
   }
-
 }

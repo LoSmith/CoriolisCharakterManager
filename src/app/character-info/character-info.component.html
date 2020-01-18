@@ -1,1 +1,10 @@
-<p>character-info works!</p>
+<div class="container">
+  <mat-card>
+    <h2>{{ currentCharacter.name }} Details</h2>
+    <div><span>name: </span>{{ currentCharacter.name }}</div>
+    <div><span>xp: </span>{{ currentCharacter.xp }}</div>
+
+    <button mat-raised-button color="primary" (click)="onSaveCharacter()">SaveCharacter</button>
+    <button mat-raised-button color="primary" (click)="onGainXp()">GainXP</button>
+  </mat-card>
+</div>
