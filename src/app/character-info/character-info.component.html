@@ -1,59 +1,51 @@
 <div class="container">
   <mat-card class="alignLeft">
-    <h2 class="alignLeft">Character: {{ characterArashar.name }}</h2>
-    <mat-expansion-panel [expanded]="openAll">
+    <h2 class="alignLeft">Character: {{ char.name }}</h2>
+    <app-dicable [dicable]="char.attributes.strength"></app-dicable>
+    <app-dicable [dicable]="char.attributes.agility"></app-dicable>
+    <app-dicable [dicable]="char.attributes.wits"></app-dicable>
+    <app-dicable [dicable]="char.attributes.empathy"></app-dicable>
+    <br />
+
+    <button mat-raised-button color="primary" (click)="onToggleAll()">All Collapsed = {{ !areAllOpen }}</button>
+    <br />
+
+    <button mat-raised-button color="primary" (click)="onGainXp()">GainXP</button>
+    <br />
+    <mat-expansion-panel [expanded]="areAllOpen">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Basic Information
         </mat-panel-title>
       </mat-expansion-panel-header>
-
-      <mat-form-field>
-        <input matInput placeholder="First name" />
-      </mat-form-field>
-
-      <mat-form-field>
-        <input matInput type="number" min="1" placeholder="Age" />
-      </mat-form-field>
-
-      <mat-action-row>
-        <button mat-button color="primary" (click)="nextStep()">Next</button>
-      </mat-action-row>
+      <mat-form-field> <input matInput placeholder="Name" value="{{ char.name }}" /> </mat-form-field>
+      <mat-form-field> <input matInput placeholder="Background Info" value="{{ char.background }}" /> </mat-form-field>
+      <mat-form-field> <input matInput placeholder="Concept" value="{{ char.concept }}" /> </mat-form-field>
+      <br />
+      <mat-form-field> <input matInput placeholder="Background" value="{{ char.background }}" /> </mat-form-field>
+      <mat-form-field> <input matInput placeholder="Icon" value="{{ char.icon }}" /> </mat-form-field>
+      <mat-form-field> <input matInput placeholder="XP" value="{{ char.xp }}" /> </mat-form-field>
+      <br />
+      <mat-form-field
+        ><textarea matInput placeholder="GroupConcept">{{ char.groupConcept }}</textarea></mat-form-field
+      >
+      <mat-form-field
+        ><textarea matInput placeholder="PersonalProblem">{{ char.personalProblem }}</textarea></mat-form-field
+      >
     </mat-expansion-panel>
-
-    <mat-expansion-panel expanded="true">
+    <mat-expansion-panel [expanded]="areAllOpen">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Body Stats
         </mat-panel-title>
       </mat-expansion-panel-header>
-
-      <mat-form-field>
-        <input matInput placeholder="Country" />
-      </mat-form-field>
-
-      <mat-action-row>
-        <button mat-button color="warn" (click)="prevStep()">Previous</button>
-        <button mat-button color="primary" (click)="nextStep()">Next</button>
-      </mat-action-row>
+      Strength: <mat-form-field> <input matInput value="{{ char.attributes.strength }}" /> </mat-form-field> Agility:
+      <mat-form-field> <input matInput value="{{ char.attributes.agility }}" /> </mat-form-field>
+      <br />
+      Wits: <mat-form-field> <input matInput value="{{ char.attributes.wits }}" /> </mat-form-field> Empathy:
+      <mat-form-field> <input matInput value="{{ char.attributes.empathy }}" /> </mat-form-field>
+      <br />
     </mat-expansion-panel>
-
-    <mat-expansion-panel [expanded]="openAll">
-      <mat-expansion-panel-header> <mat-panel-title> Abilities </mat-panel-title>> </mat-expansion-panel-header>
-
-      <mat-form-field>
-        <input matInput placeholder="Date" [matDatepicker]="picker" (focus)="picker.open()" readonly />
-      </mat-form-field>
-      <mat-datepicker #picker></mat-datepicker>
-
-      <mat-action-row>
-        <button mat-button color="warn" (click)="prevStep()">Previous</button>
-        <button mat-button color="primary" (click)="nextStep()">End</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-
-    <br />
-    <button mat-raised-button color="primary" (click)="onSaveCharacter()">SaveCharacter</button>
-    <button mat-raised-button color="primary" (click)="onGainXp()">GainXP</button>
+    <app-character-info-skills [selectedCharacter]="char" [allOpen]="areAllOpen"></app-character-info-skills>
   </mat-card>
 </div>

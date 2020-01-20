@@ -1,5 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { Character } from '@app/character-info/character';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material';
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
 
 @Component({
   selector: 'app-character-info',
@@ -7,18 +16,40 @@ import { Character } from '@app/character-info/character';
   styleUrls: ['./character-info.component.scss']
 })
 export class CharacterInfoComponent implements OnInit {
-  characterArashar: Character = new Character({
+  char: Character = new Character({
     name: 'Arashar',
-    alliance: 'Zenith',
-    xp: 42
+    xp: 42,
+    attributes: {
+      strength: {
+        name: 'Strength',
+        numberOfDice: 3
+      },
+      agility: {
+        name: 'Agility',
+        numberOfDice: 3
+      },
+      wits: {
+        name: 'Wits',
+        numberOfDice: 3
+      },
+      empathy: {
+        name: 'Empathy',
+        numberOfDice: 3
+      }
+    }
   });
-  openAll = true;
+
+  areAllOpen = true;
 
   constructor() {}
 
   ngOnInit() {}
 
   onGainXp(): void {
-    this.characterArashar.gainXP(2);
+    this.char.gainXP(2);
+  }
+
+  onToggleAll() {
+    this.areAllOpen = !this.areAllOpen;
   }
 }

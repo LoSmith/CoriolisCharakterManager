@@ -1,11 +1,11 @@
 class CharacterAttributes {
-  strength: number;
+  strength: [string, number];
   agility: number;
   wits: number;
   empathy: number;
 }
 
-class BodyStats {
+class CharacterStatus {
   hitpoints: [number, number]; // hitpoints left, hitpoints total
   mindpoints: [number, number]; // mindpoints left, mindpoints total
   radiationPoints: [number, number]; // radiationPoints left, radiationPoints total
@@ -22,22 +22,27 @@ class CoriolisItems {
 
 export class Character {
   public name: string;
-  public aliance: string;
+  public concept: string;
+  public groupConcept: string;
+  public personalProblem: string;
+  public background: string;
+  public icon: string;
   public xp: number;
   public attributes: CharacterAttributes;
-  public bodyStats: BodyStats;
+  public bodyStats: CharacterStatus;
   public inventory: CoriolisItems;
 
   private uid: number;
 
   public constructor(fields?: {
-    uid?: number;
-    name?: string;
-    alliance?: string;
-    xp?: number;
-    attributes?: CharacterAttributes;
-    bodyStats?: BodyStats;
-    inventory?: CoriolisItems;
+    name: string;
+    xp: number;
+    attributes: {
+      empathy: { name: string; numberOfDice: number };
+      strength: { name: string; numberOfDice: number };
+      wits: { name: string; numberOfDice: number };
+      agility: { name: string; numberOfDice: number };
+    };
   }) {
     if (fields) {
       Object.assign(this, fields);
