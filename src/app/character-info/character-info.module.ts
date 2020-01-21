@@ -8,16 +8,28 @@ import { CharacterInfoComponent } from './character-info.component';
 import { CharacterInfoRoutingRoutingModule } from '@app/character-info/character-info-routing.module';
 import { CharacterInfoSkillsComponent } from './character-info-skills/character-info-skills.component';
 import { DicableComponent } from './dicable/dicable.component';
+import { CharacterInfoAttributesComponent } from './character-info-attributes/character-info-attributes.component';
+import { CharacterInfoBasicsComponent } from './character-info-basics/character-info-basics.component';
+import { FormsModule } from '@angular/forms';
+import { CharacterInfoBodystatsComponent } from './character-info-bodystats/character-info-bodystats.component';
 
 @NgModule({
-  declarations: [CharacterInfoComponent, CharacterInfoSkillsComponent, DicableComponent],
+  declarations: [
+    CharacterInfoComponent,
+    CharacterInfoSkillsComponent,
+    DicableComponent,
+    CharacterInfoAttributesComponent,
+    CharacterInfoBasicsComponent,
+    CharacterInfoBodystatsComponent
+  ],
   imports: [
     CommonModule,
     TranslateModule,
     CoreModule,
     FlexLayoutModule,
     MaterialModule,
-    CharacterInfoRoutingRoutingModule
+    CharacterInfoRoutingRoutingModule,
+    FormsModule
   ]
 })
 export class CharacterInfoModule {}

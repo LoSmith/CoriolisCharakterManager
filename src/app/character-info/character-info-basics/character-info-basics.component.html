@@ -1,0 +1,20 @@
+<mat-expansion-panel [expanded]="isPanelExpanded">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Basic Information
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <mat-form-field> <input matInput placeholder="Name" [(ngModel)]="character.name"/></mat-form-field>
+  <mat-form-field> <input matInput placeholder="XP" [(ngModel)]="character.xp"/></mat-form-field>
+  <br />
+  <mat-form-field> <input matInput placeholder="Concept" [(ngModel)]="character.concept"/></mat-form-field>
+  <mat-form-field> <input matInput placeholder="Icon" [(ngModel)]="character.icon"/></mat-form-field>
+  <mat-form-field> <input matInput placeholder="Background" [(ngModel)]="character.background"/></mat-form-field>
+  <br />
+  <mat-form-field
+    ><textarea matInput placeholder="GroupConcept" [(ngModel)]="character.groupConcept"></textarea
+  ></mat-form-field>
+  <mat-form-field
+    ><textarea matInput placeholder="PersonalProblem" [(ngModel)]="character.personalProblem"></textarea
+  ></mat-form-field>
+</mat-expansion-panel>

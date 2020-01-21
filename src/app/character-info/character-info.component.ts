@@ -36,10 +36,18 @@ export class CharacterInfoComponent implements OnInit {
         name: 'Empathy',
         numberOfDice: 3
       }
+    },
+    bodyStats: {
+      hitpoints: [0, 1],
+      mindpoints: [5, 10],
+      radiationPoints: [5, 10],
+      encumbarance: [5, 10],
+      armor: 42,
+      reputation: 9001
     }
   });
 
-  areAllOpen = true;
+  areAllOpen = false;
 
   constructor() {}
 

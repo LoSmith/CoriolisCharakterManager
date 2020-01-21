@@ -1,51 +1,16 @@
 <div class="container">
   <mat-card class="alignLeft">
     <h2 class="alignLeft">Character: {{ char.name }}</h2>
-    <app-dicable [dicable]="char.attributes.strength"></app-dicable>
-    <app-dicable [dicable]="char.attributes.agility"></app-dicable>
-    <app-dicable [dicable]="char.attributes.wits"></app-dicable>
-    <app-dicable [dicable]="char.attributes.empathy"></app-dicable>
-    <br />
-
     <button mat-raised-button color="primary" (click)="onToggleAll()">All Collapsed = {{ !areAllOpen }}</button>
-    <br />
-
     <button mat-raised-button color="primary" (click)="onGainXp()">GainXP</button>
     <br />
-    <mat-expansion-panel [expanded]="areAllOpen">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Basic Information
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <mat-form-field> <input matInput placeholder="Name" value="{{ char.name }}" /> </mat-form-field>
-      <mat-form-field> <input matInput placeholder="Background Info" value="{{ char.background }}" /> </mat-form-field>
-      <mat-form-field> <input matInput placeholder="Concept" value="{{ char.concept }}" /> </mat-form-field>
-      <br />
-      <mat-form-field> <input matInput placeholder="Background" value="{{ char.background }}" /> </mat-form-field>
-      <mat-form-field> <input matInput placeholder="Icon" value="{{ char.icon }}" /> </mat-form-field>
-      <mat-form-field> <input matInput placeholder="XP" value="{{ char.xp }}" /> </mat-form-field>
-      <br />
-      <mat-form-field
-        ><textarea matInput placeholder="GroupConcept">{{ char.groupConcept }}</textarea></mat-form-field
-      >
-      <mat-form-field
-        ><textarea matInput placeholder="PersonalProblem">{{ char.personalProblem }}</textarea></mat-form-field
-      >
-    </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="areAllOpen">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Body Stats
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      Strength: <mat-form-field> <input matInput value="{{ char.attributes.strength }}" /> </mat-form-field> Agility:
-      <mat-form-field> <input matInput value="{{ char.attributes.agility }}" /> </mat-form-field>
-      <br />
-      Wits: <mat-form-field> <input matInput value="{{ char.attributes.wits }}" /> </mat-form-field> Empathy:
-      <mat-form-field> <input matInput value="{{ char.attributes.empathy }}" /> </mat-form-field>
-      <br />
-    </mat-expansion-panel>
-    <app-character-info-skills [selectedCharacter]="char" [allOpen]="areAllOpen"></app-character-info-skills>
+
+    <app-character-info-basics [character]="char" [isPanelExpanded]="areAllOpen"></app-character-info-basics>
+    <!--    <app-character-info-bodystats [character]="char" [areAllOpen]="areAllOpen" ></app-character-info-bodystats>-->
+    <app-character-info-attributes
+      [selectedCharacter]="char"
+      [isPanelExpanded]="areAllOpen"
+    ></app-character-info-attributes>
+    <app-character-info-skills [selectedCharacter]="char" [isPanelExpanded]="areAllOpen"></app-character-info-skills>
   </mat-card>
 </div>

@@ -13,10 +13,7 @@ export class DicableComponent implements OnInit {
 
   constructor(private _snackBar: MatSnackBar) {}
 
-  ngOnInit() {
-    // this.isEditable = false;
-    this.dicable.numberOfDice = this.dicable.numberOfDice + 1;
-  }
+  ngOnInit() {}
 
   onTriggerDiceRoll() {
     const rolls = [];

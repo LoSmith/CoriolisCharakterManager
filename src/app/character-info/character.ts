@@ -1,8 +1,16 @@
+import { Dicable } from '@app/shared/dicable';
+
+class CoriolisItems {
+  itemId: number;
+  itemName: string;
+  itemWeight: number;
+}
+
 class CharacterAttributes {
-  strength: [string, number];
-  agility: number;
-  wits: number;
-  empathy: number;
+  strength: Dicable;
+  agility: Dicable;
+  wits: Dicable;
+  empathy: Dicable;
 }
 
 class CharacterStatus {
@@ -14,12 +22,6 @@ class CharacterStatus {
   reputation: number; // repuatation points
 }
 
-class CoriolisItems {
-  itemId: number;
-  itemName: string;
-  itemWeight: number;
-}
-
 export class Character {
   public name: string;
   public concept: string;
@@ -29,6 +31,7 @@ export class Character {
   public icon: string;
   public xp: number;
   public attributes: CharacterAttributes;
+  // public skills: CharacterSkills;
   public bodyStats: CharacterStatus;
   public inventory: CoriolisItems;
 
@@ -43,6 +46,10 @@ export class Character {
       wits: { name: string; numberOfDice: number };
       agility: { name: string; numberOfDice: number };
     };
+    bodyStats: {
+      armor: 42;
+      reputation: 9001;
+    };
   }) {
     if (fields) {
       Object.assign(this, fields);
@@ -50,6 +57,6 @@ export class Character {
   }
 
   gainXP(additionalXp: number) {
-    this.xp += additionalXp;
+    this.xp = this.xp + additionalXp;
   }
 }

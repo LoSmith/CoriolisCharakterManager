@@ -1,0 +1,10 @@
+<script src="../character.ts"></script>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Body Stats
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  Strength: <mat-form-field> <input matInput [(ngModel)]="character.attributes.strength" /> </mat-form-field> Agility:
+  <mat-form-field> <input matInput [(ngModel)]="character.attributes.agility" /> </mat-form-field>
+</mat-expansion-panel>
