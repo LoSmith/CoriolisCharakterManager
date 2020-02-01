@@ -4,8 +4,20 @@
       Attributes
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <app-dicable [dicable]="selectedCharacter.attributes.strength"></app-dicable>
-  <app-dicable [dicable]="selectedCharacter.attributes.agility"></app-dicable> <br />
-  <app-dicable [dicable]="selectedCharacter.attributes.wits"></app-dicable>
-  <app-dicable [dicable]="selectedCharacter.attributes.empathy"></app-dicable> <br />
+
+  <p *ngFor="let item of selectedCharacter.attributes; let i = index">
+    <mat-form-field>
+      <mat-label>{{ item.type | titlecase }}</mat-label>
+      <mat-select [(value)]="item.value">
+        <mat-option [value]="1">1</mat-option>
+        <mat-option [value]="2">2</mat-option>
+        <mat-option [value]="3">3</mat-option>
+        <mat-option [value]="4">4</mat-option>
+        <mat-option [value]="5">5</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-button-toggle (click)="onTriggerDiceRoll()">
+      <mat-icon>shuffle</mat-icon>
+    </mat-button-toggle>
+  </p>
 </mat-expansion-panel>

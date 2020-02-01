@@ -1,10 +1,19 @@
-<script src="../../shared/character/character.ts"></script>
-<mat-expansion-panel [expanded]="true">
+<mat-expansion-panel [expanded]="isPanelExpanded">
   <mat-expansion-panel-header>
     <mat-panel-title>
       Body Stats
     </mat-panel-title>
   </mat-expansion-panel-header>
-  Strength: <mat-form-field> <input matInput [(ngModel)]="character.attributes.strength" /> </mat-form-field> Agility:
-  <mat-form-field> <input matInput [(ngModel)]="character.attributes.agility" /> </mat-form-field>
+  Hitpoints:
+  <mat-form-field> <input matInput [(ngModel)]="character.bodyStatus.hitpoints.currentValue" /> </mat-form-field>
+  Mindpoints:
+  <mat-form-field> <input matInput [(ngModel)]="character.bodyStatus.mindpoints.currentValue" /> </mat-form-field>
+  <br />
+  RadiationPoints:
+  <mat-form-field> <input matInput [(ngModel)]="character.bodyStatus.radiationPoints.currentValue" /> </mat-form-field>
+  Encumbarance:
+  <mat-form-field> <input matInput [(ngModel)]="character.bodyStatus.encumbarance.currentValue" /> </mat-form-field>
+  <br />
+  Armor: <mat-form-field> <input matInput [(ngModel)]="character.bodyStatus.armor" /> </mat-form-field> Reputation:
+  <mat-form-field> <input matInput [(ngModel)]="character.bodyStatus.reputation" /> </mat-form-field>
 </mat-expansion-panel>

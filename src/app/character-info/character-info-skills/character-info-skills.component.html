@@ -1,6 +1,24 @@
 <mat-expansion-panel [expanded]="isPanelExpanded">
   <mat-expansion-panel-header>
-    <mat-panel-title> Skills </mat-panel-title>
+    <mat-panel-title>
+      Skills
+    </mat-panel-title>
   </mat-expansion-panel-header>
-  <app-dicable [dicable]="selectedCharacter.attributes.strength"></app-dicable>
+
+  <p *ngFor="let item of selectedCharacter.skills; let i = index">
+    <mat-form-field>
+      <mat-label>{{ item.type | titlecase }}</mat-label>
+      <mat-select [(value)]="item.value">
+        <mat-option [value]="0">0</mat-option>
+        <mat-option [value]="1">1</mat-option>
+        <mat-option [value]="2">2</mat-option>
+        <mat-option [value]="3">3</mat-option>
+        <mat-option [value]="4">4</mat-option>
+        <mat-option [value]="5">5</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-button-toggle (click)="onTriggerDiceRoll()">
+      <mat-icon>shuffle</mat-icon>
+    </mat-button-toggle>
+  </p>
 </mat-expansion-panel>

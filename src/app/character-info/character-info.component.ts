@@ -1,7 +1,7 @@
-import { Component, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Character } from '@app/shared/character/character';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material';
+import { AttributeType } from '@app/shared/character/attributeType';
+import { SkillType } from '@app/shared/character/skillType';
 
 export interface PeriodicElement {
   name: string;
@@ -19,42 +19,38 @@ export class CharacterInfoComponent implements OnInit {
   char: Character = new Character({
     name: 'Arashar',
     xp: 42,
-    attributes: {
-      strength: {
-        name: 'Strength',
-        numberOfDice: 3
-      },
-      agility: {
-        name: 'Agility',
-        numberOfDice: 3
-      },
-      wits: {
-        name: 'Wits',
-        numberOfDice: 3
-      },
-      empathy: {
-        name: 'Empathy',
-        numberOfDice: 3
-      }
-    },
-    bodyStats: {
-      hitpoints: [0, 1],
-      mindpoints: [5, 10],
-      radiationPoints: [5, 10],
-      encumbarance: [5, 10],
-      armor: 42,
-      reputation: 9001
+    attributes: [
+      { type: AttributeType.Strength, value: 1 },
+      { type: AttributeType.Agility, value: 2 },
+      { type: AttributeType.Wits, value: 3 },
+      { type: AttributeType.Empathy, value: 4 }
+    ],
+    skills: [
+      { type: SkillType.Command, value: 5 },
+      { type: SkillType.Culture, value: 4 },
+      { type: SkillType.DataDjinn, value: 3 },
+      { type: SkillType.Force, value: 2 },
+      { type: SkillType.Manipulation, value: 1 },
+      { type: SkillType.Survival, value: 0 }
+    ],
+    bodyStatus: {
+      reputation: 100,
+      armor: 100,
+      hitpoints: { currentValue: 42, maximumValue: 100 },
+      mindpoints: { currentValue: 42, maximumValue: 100 },
+      radiationPoints: { currentValue: 42, maximumValue: 100 },
+      encumbarance: { currentValue: 42, maximumValue: 100 }
     }
   });
 
   areAllOpen = false;
-
   constructor() {}
 
   ngOnInit() {}
 
   onGainXp(): void {
-    this.char.gainXP(2);
+    const additionalXp = 2;
+    this.char.gainXP(additionalXp);
   }
 
   onToggleAll() {

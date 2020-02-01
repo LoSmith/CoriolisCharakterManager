@@ -13,4 +13,8 @@ export class CharacterInfoAttributesComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  onTriggerDiceRoll() {
+    console.log('jiosdjfo');
+  }
 }

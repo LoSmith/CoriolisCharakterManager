@@ -1,4 +1,4 @@
-export enum AttributeTypes {
+export enum AttributeType {
   Strength = 'Strength',
   Agility = 'Agility',
   Wits = 'Wits',

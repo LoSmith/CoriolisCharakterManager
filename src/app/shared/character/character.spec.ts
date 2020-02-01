@@ -1,6 +1,6 @@
-import { Character, CharacterSkill } from '@app/shared/character/character';
-import { AttributeTypes } from '@app/shared/character/attributeTypes';
-import { SkillTypes } from '@app/shared/character/skillTypes';
+import { Character, CharacterBodyStatus, CharacterSkill } from '@app/shared/character/character';
+import { AttributeType } from '@app/shared/character/attributeType';
+import { SkillType } from '@app/shared/character/skillType';
 import { Dice } from '@app/shared/dice/dice';
 
 describe('Character', () => {
@@ -22,7 +22,7 @@ describe('Character', () => {
 
   describe('Skills', () => {
     it('should create a character with a defined skill', () => {
-      const testSkill: CharacterSkill = { type: SkillTypes.Command, value: 3 };
+      const testSkill: CharacterSkill = { type: SkillType.Command, value: 3 };
       testobject = new Character({
         skills: [testSkill, testSkill]
       });
@@ -34,7 +34,7 @@ describe('Character', () => {
 
   describe('Attribute', () => {
     it('should create a character with a defined attribute', () => {
-      const testAttribute = { type: AttributeTypes.Agility, value: 1 };
+      const testAttribute = { type: AttributeType.Agility, value: 1 };
       testobject = new Character({
         name: 'test',
         attributes: [testAttribute]
@@ -44,8 +44,8 @@ describe('Character', () => {
       expect(testobject.attributes[0]).toEqual(testAttribute);
     });
 
-    it('should create a char with a empty array of attributes', function() {
-      const testAttribute = { type: AttributeTypes.Agility, value: 1 };
+    it('should create a char with a empty array of attributes', () => {
+      const testAttribute = { type: AttributeType.Agility, value: 1 };
       testobject = new Character({
         name: 'test',
         attributes: []
@@ -56,9 +56,40 @@ describe('Character', () => {
     });
   });
 
+  describe('BodyStatus', () => {
+    it('should create a character with a defined BodyStatus', () => {
+      const testBodyStatus = {
+        hitpoints: { currentValue: 5, maximumValue: 10 }
+      };
+      testobject = new Character({
+        name: 'test',
+        bodyStatus: testBodyStatus
+      });
+
+      expect(testobject).toBeTruthy();
+    });
+
+    it('should create a character with a defined BodyStatus', () => {
+      const testBodyStatus: CharacterBodyStatus = {
+        hitpoints: { currentValue: 5, maximumValue: 10 },
+        mindpoints: { currentValue: 5, maximumValue: 10 },
+        armor: 10,
+        encumbarance: { currentValue: 5, maximumValue: 10 },
+        radiationPoints: { currentValue: 5, maximumValue: 10 },
+        reputation: 120
+      };
+      testobject = new Character({
+        name: 'test',
+        bodyStatus: testBodyStatus
+      });
+
+      expect(testobject).toBeTruthy();
+    });
+  });
+
   describe('rollSkill', () => {
-    const testAttribute = { type: AttributeTypes.Agility, value: 1 };
-    const testSkill: CharacterSkill = { type: SkillTypes.Dexterity, value: 3 };
+    const testAttribute = { type: AttributeType.Agility, value: 5 };
+    const testSkill: CharacterSkill = { type: SkillType.Dexterity, value: 5 };
 
     beforeEach(() => {
       testobject = new Character({
@@ -68,9 +99,27 @@ describe('Character', () => {
       });
     });
 
-    it('should roll a defined skill and determine the amount of successes', () => {
-      const skillTestResult: [number, Dice[]] = testobject.rollSkill(SkillTypes.Dexterity);
+    it('should roll 10 dice from a defined skill and determine the amount of successes', () => {
+      const skillTestResult: [number, Dice[]] = testobject.rollSkill(SkillType.Dexterity, 0);
       expect(skillTestResult).toBeTruthy();
+      expect(skillTestResult[1].length).toEqual(10);
+    });
+  });
+
+  describe('rollAttribute', () => {
+    const testAttribute = { type: AttributeType.Agility, value: 5 };
+
+    beforeEach(() => {
+      testobject = new Character({
+        name: 'test',
+        attributes: [testAttribute]
+      });
+    });
+
+    it('should roll a attribute and return the amound of successes and the dice rolled', () => {
+      const skillTestResult: [number, Dice[]] = testobject.rollAttribute(AttributeType.Agility, 5);
+      expect(skillTestResult).toBeTruthy();
+      expect(skillTestResult[1].length).toEqual(10);
     });
   });
 });

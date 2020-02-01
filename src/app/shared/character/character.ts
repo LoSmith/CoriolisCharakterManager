@@ -1,16 +1,30 @@
 import { Dice } from '@app/shared/dice/dice';
-import { SkillTypes } from '@app/shared/character/skillTypes';
-import { AttributeTypes } from '@app/shared/character/attributeTypes';
-import { GetBaseAttributeTypeOfSkill } from '@app/shared/character/skillTypes';
+import { SkillType } from '@app/shared/character/skillType';
+import { AttributeType } from '@app/shared/character/attributeType';
+import { GetBaseAttributeTypeOfSkill } from '@app/shared/character/skillType';
 
 export interface CharacterSkill {
-  type: SkillTypes;
+  type: SkillType;
   value: number;
 }
 
 export interface CharacterAttribute {
-  type: AttributeTypes;
+  type: AttributeType;
   value: number;
+}
+
+export interface CharacterDrainable {
+  currentValue: number;
+  maximumValue: number;
+}
+
+export interface CharacterBodyStatus {
+  hitpoints?: CharacterDrainable;
+  mindpoints?: CharacterDrainable;
+  radiationPoints?: CharacterDrainable;
+  encumbarance?: CharacterDrainable;
+  armor?: number;
+  reputation?: number;
 }
 
 interface CoriolisItem {
@@ -18,15 +32,6 @@ interface CoriolisItem {
   itemName: string;
   itemWeight: number;
   influenceToSkill: [];
-}
-
-class CharacterBodyStatus {
-  hitpoints: [number, number]; // hitpoints left, hitpoints total
-  mindpoints: [number, number]; // mindpoints left, mindpoints total
-  radiationPoints: [number, number]; // radiationPoints left, radiationPoints total
-  encumbarance: [number, number]; // encumbarance left, encumbarance total
-  armor: number; // armor points
-  reputation: number; // repuatation points
 }
 
 class CharacterInventory {}
@@ -42,7 +47,7 @@ export class Character {
 
   attributes: CharacterAttribute[];
   skills: CharacterSkill[];
-  // bodyStats?: CharacterBodyStatus;
+  bodyStatus: CharacterBodyStatus;
   // inventory: CharacterInventory;
 
   private uid: number;
@@ -56,9 +61,44 @@ export class Character {
    * @param skill - the skilltype to roll
    * @param manualModifications - manual modifications for the roll
    */
-  rollSkill(skill: SkillTypes, manualModifications: number = 0): [number, Dice[]] {
+  rollSkill(skill: SkillType, manualModifications: number = 0): [number, Dice[]] {
     const numberOfDiceToRoll = this.countAvailableDiceForSkill(skill) + manualModifications;
+    return this.rollNumberOfDice(numberOfDiceToRoll);
+  }
 
+  /**
+   * rolls a single attribute and returns the successses and the dices
+   * @param skill - the skilltype to roll
+   * @param manualModifications - manual modifications for the roll
+   */
+  rollAttribute(attribute: AttributeType, manualModifications: number = 0): [number, Dice[]] {
+    const numberOfDiceToRoll = this.countAvailableDiceForAttribute(attribute) + manualModifications;
+    return this.rollNumberOfDice(numberOfDiceToRoll);
+  }
+
+  gainXP(additionalXp: number) {
+    // TODO: BUG 24 + 2 = 242 .. somthing weird with the addition function
+    const xp: number = this.xp;
+    this.xp = xp + additionalXp;
+  }
+
+  private countAvailableDiceForSkill(skill: SkillType): number {
+    const usedSkill: CharacterSkill = this.skills.find(item => item.type === skill);
+    const skillValue = usedSkill.value;
+
+    const baseAttributeToUse: AttributeType = GetBaseAttributeTypeOfSkill(skill);
+    const baseAttributeValue = this.countAvailableDiceForAttribute(baseAttributeToUse);
+
+    return skillValue + baseAttributeValue;
+  }
+
+  private countAvailableDiceForAttribute(attributeType: AttributeType): number {
+    const attribute = this.attributes.find(item => item.type === attributeType);
+    const attributeValue = attribute.value;
+    return attributeValue;
+  }
+
+  private rollNumberOfDice(numberOfDiceToRoll: number): [number, Dice[]] {
     const dice: Dice[] = [];
     let numberOfSuccesses = 0;
     for (let i = 0; i < numberOfDiceToRoll; i++) {
@@ -68,19 +108,5 @@ export class Character {
       }
     }
     return [numberOfSuccesses, dice];
-  }
-
-  gainXP(additionalXp: number) {
-    this.xp = this.xp + additionalXp;
-  }
-
-  private countAvailableDiceForSkill(skill: SkillTypes): number {
-    const usedSkill: CharacterSkill = this.skills.find(item => item.type === skill);
-    const skillValue = usedSkill.value;
-
-    const baseAttributeToUse: AttributeTypes = GetBaseAttributeTypeOfSkill(skill);
-    const baseAttribute = this.attributes.find(item => item.type === baseAttributeToUse);
-    const baseAttributeValue = baseAttribute.value;
-    return skillValue + baseAttributeValue;
   }
 }

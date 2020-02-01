@@ -8,7 +8,7 @@ import { Character } from '@app/shared/character/character';
 })
 export class CharacterInfoBodystatsComponent implements OnInit {
   @Input() character: Character;
-  @Input() areAllOpen: boolean;
+  @Input() isPanelExpanded: boolean;
 
   constructor() {}
 

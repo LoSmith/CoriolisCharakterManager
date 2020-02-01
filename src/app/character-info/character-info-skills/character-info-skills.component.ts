@@ -13,4 +13,6 @@ export class CharacterInfoSkillsComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  onTriggerDiceRoll() {}
 }
