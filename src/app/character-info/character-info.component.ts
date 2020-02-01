@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
-import { Character } from '@app/character-info/character';
+import { Character } from '@app/shared/character';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material';
 
