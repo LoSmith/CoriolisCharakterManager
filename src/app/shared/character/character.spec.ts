@@ -100,9 +100,9 @@ describe('Character', () => {
     });
 
     it('should roll 10 dice from a defined skill and determine the amount of successes', () => {
-      const skillTestResult: [number, Dice[]] = testobject.rollSkill(SkillType.Dexterity, 0);
+      const skillTestResult: Dice[] = testobject.rollSkill(SkillType.Dexterity, 0);
       expect(skillTestResult).toBeTruthy();
-      expect(skillTestResult[1].length).toEqual(10);
+      expect(skillTestResult.length).toEqual(10);
     });
   });
 
@@ -117,9 +117,9 @@ describe('Character', () => {
     });
 
     it('should roll a attribute and return the amound of successes and the dice rolled', () => {
-      const skillTestResult: [number, Dice[]] = testobject.rollAttribute(AttributeType.Agility, 5);
+      const skillTestResult: Dice[] = testobject.rollAttribute(AttributeType.Agility, 5);
       expect(skillTestResult).toBeTruthy();
-      expect(skillTestResult[1].length).toEqual(10);
+      expect(skillTestResult.length).toEqual(10);
     });
   });
 });

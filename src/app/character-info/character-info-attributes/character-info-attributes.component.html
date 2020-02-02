@@ -1,14 +1,14 @@
-<mat-expansion-panel [expanded]="isPanelExpanded">
+<mat-expansion-panel [expanded]="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
       Attributes
     </mat-panel-title>
   </mat-expansion-panel-header>
 
-  <p *ngFor="let item of selectedCharacter.attributes; let i = index">
+  <p *ngFor="let attribute of selectedCharacter.attributes; let i = index">
     <mat-form-field>
-      <mat-label>{{ item.type | titlecase }}</mat-label>
-      <mat-select [(value)]="item.value">
+      <mat-label>{{ attribute.type | titlecase }}</mat-label>
+      <mat-select [(value)]="attribute.value">
         <mat-option [value]="1">1</mat-option>
         <mat-option [value]="2">2</mat-option>
         <mat-option [value]="3">3</mat-option>
@@ -16,7 +16,7 @@
         <mat-option [value]="5">5</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-button-toggle (click)="onTriggerDiceRoll()">
+    <mat-button-toggle (click)="onRollAttribute(attribute)">
       <mat-icon>shuffle</mat-icon>
     </mat-button-toggle>
   </p>

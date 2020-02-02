@@ -1,7 +1,6 @@
 import { Dice } from '@app/shared/dice/dice';
-import { SkillType } from '@app/shared/character/skillType';
+import { GetBaseAttributeTypeOfSkill, SkillType } from '@app/shared/character/skillType';
 import { AttributeType } from '@app/shared/character/attributeType';
-import { GetBaseAttributeTypeOfSkill } from '@app/shared/character/skillType';
 
 export interface CharacterSkill {
   type: SkillType;
@@ -27,14 +26,12 @@ export interface CharacterBodyStatus {
   reputation?: number;
 }
 
-interface CoriolisItem {
-  itemId: number;
-  itemName: string;
-  itemWeight: number;
-  influenceToSkill: [];
-}
-
-class CharacterInventory {}
+// interface CoriolisItem {
+//   itemId: number;
+//   itemName: string;
+//   itemWeight: number;
+//   influenceToSkill: [];
+// }
 
 export class Character {
   name: string;
@@ -48,9 +45,22 @@ export class Character {
   attributes: CharacterAttribute[];
   skills: CharacterSkill[];
   bodyStatus: CharacterBodyStatus;
+
+  private static rollNumberOfDice(numberOfDiceToRoll: number): Dice[] {
+    const dice: Dice[] = [];
+    let numberOfSuccesses = 0;
+    for (let i = 0; i < numberOfDiceToRoll; i++) {
+      dice[i] = new Dice();
+      if (dice[i].rollAgainstUpperThreshold(6)) {
+        ++numberOfSuccesses;
+      }
+    }
+    return dice;
+  }
+
   // inventory: CharacterInventory;
 
-  private uid: number;
+  // private uid: number;
 
   public constructor(init?: Partial<Character>) {
     Object.assign(this, init);
@@ -61,19 +71,19 @@ export class Character {
    * @param skill - the skilltype to roll
    * @param manualModifications - manual modifications for the roll
    */
-  rollSkill(skill: SkillType, manualModifications: number = 0): [number, Dice[]] {
+  rollSkill(skill: SkillType, manualModifications: number = 0): Dice[] {
     const numberOfDiceToRoll = this.countAvailableDiceForSkill(skill) + manualModifications;
-    return this.rollNumberOfDice(numberOfDiceToRoll);
+    return Character.rollNumberOfDice(numberOfDiceToRoll);
   }
 
   /**
    * rolls a single attribute and returns the successses and the dices
-   * @param skill - the skilltype to roll
+   * @param attribute - attribute to use
    * @param manualModifications - manual modifications for the roll
    */
-  rollAttribute(attribute: AttributeType, manualModifications: number = 0): [number, Dice[]] {
+  rollAttribute(attribute: AttributeType, manualModifications: number = 0): Dice[] {
     const numberOfDiceToRoll = this.countAvailableDiceForAttribute(attribute) + manualModifications;
-    return this.rollNumberOfDice(numberOfDiceToRoll);
+    return Character.rollNumberOfDice(numberOfDiceToRoll);
   }
 
   gainXP(additionalXp: number) {
@@ -94,19 +104,6 @@ export class Character {
 
   private countAvailableDiceForAttribute(attributeType: AttributeType): number {
     const attribute = this.attributes.find(item => item.type === attributeType);
-    const attributeValue = attribute.value;
-    return attributeValue;
-  }
-
-  private rollNumberOfDice(numberOfDiceToRoll: number): [number, Dice[]] {
-    const dice: Dice[] = [];
-    let numberOfSuccesses = 0;
-    for (let i = 0; i < numberOfDiceToRoll; i++) {
-      dice[i] = new Dice();
-      if (dice[i].rollAgainstUpperThreshold(6)) {
-        ++numberOfSuccesses;
-      }
-    }
-    return [numberOfSuccesses, dice];
+    return attribute.value;
   }
 }

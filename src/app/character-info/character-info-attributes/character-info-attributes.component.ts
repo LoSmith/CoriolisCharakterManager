@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Character } from '@app/shared/character/character';
+import { Character, CharacterAttribute } from '@app/shared/character/character';
+import { DiceRollService } from '@app/dice-roll-modal/dice-roll.service';
+import { Dice } from '@app/shared/dice/dice';
 
 @Component({
   selector: 'app-character-info-attributes',
@@ -10,11 +12,12 @@ export class CharacterInfoAttributesComponent implements OnInit {
   @Input() selectedCharacter: Character;
   @Input() isPanelExpanded: boolean;
 
-  constructor() {}
+  constructor(public diceRollService: DiceRollService) {}
 
   ngOnInit() {}
 
-  onTriggerDiceRoll() {
-    console.log('jiosdjfo');
+  onRollAttribute(attribute: CharacterAttribute) {
+    const dice: Dice[] = this.selectedCharacter.rollAttribute(attribute.type);
+    this.diceRollService.openDialog(attribute, dice);
   }
 }

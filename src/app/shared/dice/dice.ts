@@ -1,10 +1,13 @@
 import * as _ from 'lodash';
 
 export class Dice {
-  private numberOfSides = 6;
-  private hasBeenRolled = false;
+  public numberOfSides = 6;
+  public diceResult: number;
   private successful: boolean;
-  private diceResult: number;
+  private threshold: number;
+  private hasBeenRolled = false;
+  private isGreaterThresholdUsed = false;
+  private isLesserThresholdUsed = false;
 
   constructor(init?: Partial<Dice>) {
     Object.assign(this, init);
@@ -29,6 +32,8 @@ export class Dice {
     }
     this.diceResult = this.roll();
     this.successful = this.diceResult >= upperThreshold;
+    this.threshold = upperThreshold;
+    this.isGreaterThresholdUsed = true;
     return this.successful;
   }
 
@@ -43,6 +48,8 @@ export class Dice {
     }
     this.diceResult = this.roll();
     this.successful = this.diceResult <= lowerThreshold;
+    this.threshold = lowerThreshold;
+    this.isLesserThresholdUsed = true;
     return this.successful;
   }
 }

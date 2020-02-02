@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CharacterInfoComponent } from './character-info.component';
+import { DiceRollModalComponent } from './dice-roll-modal.component';
 
-describe('CharacterInfoComponent', () => {
-  let component: CharacterInfoComponent;
-  let fixture: ComponentFixture<CharacterInfoComponent>;
+describe('DiceRollComponent', () => {
+  let component: DiceRollModalComponent;
+  let fixture: ComponentFixture<DiceRollModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CharacterInfoComponent]
+      declarations: [DiceRollModalComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CharacterInfoComponent);
+    fixture = TestBed.createComponent(DiceRollModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
