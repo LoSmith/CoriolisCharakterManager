@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { ApplicationRef, Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Dice } from '@app/shared/dice/dice';
 import { CharacterAttribute, CharacterSkill } from '@app/shared/character/character';
@@ -15,6 +15,7 @@ export interface DiceRollModalDialogData {
 })
 export class DiceRollModalComponent implements OnInit {
   constructor(
+    public appRef: ApplicationRef,
     public dialogRef: MatDialogRef<DiceRollModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DiceRollModalDialogData
   ) {}
@@ -40,5 +41,7 @@ export class DiceRollModalComponent implements OnInit {
       }
       return dice;
     });
+
+    this.appRef.tick();
   }
 }
