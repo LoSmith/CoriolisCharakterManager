@@ -5,10 +5,10 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
 
-  <p *ngFor="let item of selectedCharacter.skills; let i = index">
+  <p *ngFor="let skill of selectedCharacter.skills; let i = index">
     <mat-form-field>
-      <mat-label>{{ item.type | titlecase }}</mat-label>
-      <mat-select [(value)]="item.value">
+      <mat-label>{{ skill.type | titlecase }}</mat-label>
+      <mat-select [(value)]="skill.value">
         <mat-option [value]="0">0</mat-option>
         <mat-option [value]="1">1</mat-option>
         <mat-option [value]="2">2</mat-option>
@@ -17,7 +17,7 @@
         <mat-option [value]="5">5</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-button-toggle (click)="onTriggerDiceRoll()">
+    <mat-button-toggle (click)="onDiceRollPressed(skill)">
       <mat-icon>shuffle</mat-icon>
     </mat-button-toggle>
   </p>

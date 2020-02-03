@@ -18,7 +18,8 @@ export class Dice {
    */
   public roll(): number {
     this.hasBeenRolled = true;
-    return Math.ceil(Math.random() * this.numberOfSides);
+    this.diceResult = Math.ceil(Math.random() * this.numberOfSides);
+    return this.diceResult;
   }
 
   /**
@@ -30,7 +31,7 @@ export class Dice {
     if (_.isNil(upperThreshold)) {
       throw new Error();
     }
-    this.diceResult = this.roll();
+    this.roll();
     this.successful = this.diceResult >= upperThreshold;
     this.threshold = upperThreshold;
     this.isGreaterThresholdUsed = true;
@@ -46,7 +47,7 @@ export class Dice {
     if (_.isNil(lowerThreshold)) {
       throw new Error();
     }
-    this.diceResult = this.roll();
+    this.roll();
     this.successful = this.diceResult <= lowerThreshold;
     this.threshold = lowerThreshold;
     this.isLesserThresholdUsed = true;

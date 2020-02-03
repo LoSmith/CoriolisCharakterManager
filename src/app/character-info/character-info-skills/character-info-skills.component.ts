@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Character } from '@app/shared/character/character';
+import { Character, CharacterAttribute, CharacterSkill } from '@app/shared/character/character';
+import { Dice } from '@app/shared/dice/dice';
+import { DiceRollService } from '@app/dice-roll-modal/dice-roll.service';
 
 @Component({
   selector: 'app-character-info-skills',
@@ -10,9 +12,12 @@ export class CharacterInfoSkillsComponent implements OnInit {
   @Input() selectedCharacter: Character;
   @Input() isPanelExpanded: boolean;
 
-  constructor() {}
+  constructor(public diceRollService: DiceRollService) {}
 
   ngOnInit() {}
 
-  onTriggerDiceRoll() {}
+  onDiceRollPressed(skill: CharacterSkill) {
+    const dice: Dice[] = this.selectedCharacter.rollSkill(skill.type);
+    this.diceRollService.openDialog(skill, dice);
+  }
 }

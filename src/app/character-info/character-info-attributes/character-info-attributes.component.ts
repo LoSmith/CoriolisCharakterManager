@@ -16,7 +16,7 @@ export class CharacterInfoAttributesComponent implements OnInit {
 
   ngOnInit() {}
 
-  onRollAttribute(attribute: CharacterAttribute) {
+  onDiceRollPressed(attribute: CharacterAttribute) {
     const dice: Dice[] = this.selectedCharacter.rollAttribute(attribute.type);
     this.diceRollService.openDialog(attribute, dice);
   }

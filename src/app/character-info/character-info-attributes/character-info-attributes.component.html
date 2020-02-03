@@ -1,4 +1,4 @@
-<mat-expansion-panel [expanded]="true">
+<mat-expansion-panel [expanded]="isPanelExpanded">
   <mat-expansion-panel-header>
     <mat-panel-title>
       Attributes
@@ -16,7 +16,7 @@
         <mat-option [value]="5">5</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-button-toggle (click)="onRollAttribute(attribute)">
+    <mat-button-toggle (click)="onDiceRollPressed(attribute)">
       <mat-icon>shuffle</mat-icon>
     </mat-button-toggle>
   </p>

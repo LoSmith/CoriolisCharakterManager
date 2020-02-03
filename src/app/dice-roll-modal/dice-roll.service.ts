@@ -10,11 +10,11 @@ import { CharacterAttribute, CharacterSkill } from '@app/shared/character/charac
 export class DiceRollService {
   constructor(public dialog: MatDialog) {}
 
-  openDialog(source: CharacterAttribute, dice: Dice[]): void {
+  openDialog(source: CharacterSkill | CharacterAttribute, dice: Dice[]): void {
     const dataContainer: DiceRollModalDialogData = { source, dice };
 
     const dialogRef = this.dialog.open(DiceRollModalComponent, {
-      width: '250px',
+      width: '33%',
       data: dataContainer
     });
 

@@ -24,4 +24,21 @@ export class DiceRollModalComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  isSuccess(dice: Dice): boolean {
+    return dice.diceResult === 6;
+  }
+
+  isNoSuccess(dice: Dice): boolean {
+    return dice.diceResult !== 6;
+  }
+
+  onRerollClick() {
+    this.data.dice = this.data.dice.map(dice => {
+      if (this.isNoSuccess(dice)) {
+        dice.roll();
+      }
+      return dice;
+    });
+  }
 }
