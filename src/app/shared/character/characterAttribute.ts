@@ -4,3 +4,8 @@ export enum AttributeType {
   Wits = 'Wits',
   Empathy = 'Empathy'
 }
+
+export interface CharacterAttribute {
+  type: AttributeType;
+  value: number;
+}

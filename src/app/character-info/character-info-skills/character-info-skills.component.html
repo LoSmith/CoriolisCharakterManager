@@ -5,7 +5,7 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
 
-  <p *ngFor="let skill of selectedCharacter.skills; let i = index">
+  <p *ngFor="let skill of selectedCharacter.skills; let last = last">
     <mat-form-field>
       <mat-label>{{ skill.type | titlecase }}</mat-label>
       <mat-select [(value)]="skill.value">
@@ -20,5 +20,6 @@
     <mat-button-toggle (click)="onDiceRollPressed(skill)">
       <mat-icon>shuffle</mat-icon>
     </mat-button-toggle>
+    <mat-divider *ngIf="skill != last"></mat-divider>
   </p>
 </mat-expansion-panel>

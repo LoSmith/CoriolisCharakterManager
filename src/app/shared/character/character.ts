@@ -1,16 +1,8 @@
 import { Dice } from '@app/shared/dice/dice';
-import { GetBaseAttributeTypeOfSkill, SkillType } from '@app/shared/character/skillType';
-import { AttributeType } from '@app/shared/character/attributeType';
-
-export interface CharacterSkill {
-  type: SkillType;
-  value: number;
-}
-
-export interface CharacterAttribute {
-  type: AttributeType;
-  value: number;
-}
+import { CharacterSkill, GetBaseAttributeTypeOfSkill, SkillType } from '@app/shared/character/characterSkill';
+import { AttributeType, CharacterAttribute } from '@app/shared/character/characterAttribute';
+import { CharacterItem } from '@app/shared/character/characterItem';
+import { reduce } from 'rxjs/operators';
 
 export interface CharacterDrainable {
   currentValue: number;
@@ -26,13 +18,6 @@ export interface CharacterBodyStatus {
   reputation?: number;
 }
 
-// interface CoriolisItem {
-//   itemId: number;
-//   itemName: string;
-//   itemWeight: number;
-//   influenceToSkill: [];
-// }
-
 export class Character {
   name: string;
   concept: string;
@@ -45,6 +30,7 @@ export class Character {
   attributes: CharacterAttribute[];
   skills: CharacterSkill[];
   bodyStatus: CharacterBodyStatus;
+  items: CharacterItem[];
 
   private static rollNumberOfDice(numberOfDiceToRoll: number): Dice[] {
     const dice: Dice[] = [];
@@ -99,11 +85,25 @@ export class Character {
     const baseAttributeToUse: AttributeType = GetBaseAttributeTypeOfSkill(skill);
     const baseAttributeValue = this.countAvailableDiceForAttribute(baseAttributeToUse);
 
-    return skillValue + baseAttributeValue;
+    const itemModifierValue = this.getItemModifers(skill);
+
+    return skillValue + baseAttributeValue + itemModifierValue;
   }
 
   private countAvailableDiceForAttribute(attributeType: AttributeType): number {
     const attribute = this.attributes.find(item => item.type === attributeType);
     return attribute.value;
+  }
+
+  private getItemModifers(skill: SkillType) {
+    return this.items.reduce((accumulator, currentItem) => {
+      if (currentItem.influenceToSkill.skillToBeModified === skill) {
+        accumulator += currentItem.influenceToSkill.modifierValue;
+      } else {
+        // nothing to add .. wrong skill
+      }
+
+      return accumulator;
+    }, 0);
   }
 }
