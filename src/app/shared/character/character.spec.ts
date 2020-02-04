@@ -1,6 +1,6 @@
-import { Character, CharacterBodyStatus, CharacterSkill } from '@app/shared/character/character';
-import { AttributeType } from '@app/shared/character/attributeType';
-import { SkillType } from '@app/shared/character/skillType';
+import { Character, CharacterBodyStatus } from '@app/shared/character/character';
+import { AttributeType } from '@app/shared/character/characterAttribute';
+import { CharacterSkill, SkillType } from '@app/shared/character/characterSkill';
 import { Dice } from '@app/shared/dice/dice';
 
 describe('Character', () => {

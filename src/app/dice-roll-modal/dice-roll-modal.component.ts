@@ -1,7 +1,8 @@
 import { ApplicationRef, Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Dice } from '@app/shared/dice/dice';
-import { CharacterAttribute, CharacterSkill } from '@app/shared/character/character';
+import { CharacterAttribute } from '@app/shared/character/characterAttribute';
+import { CharacterSkill } from '@app/shared/character/characterSkill';
 
 export interface DiceRollModalDialogData {
   source: CharacterAttribute | CharacterSkill;

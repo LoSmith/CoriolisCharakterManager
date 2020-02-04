@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Character } from '@app/shared/character/character';
-import { AttributeType } from '@app/shared/character/attributeType';
-import { SkillType } from '@app/shared/character/skillType';
+import { AttributeType } from '@app/shared/character/characterAttribute';
+import { SkillType } from '@app/shared/character/characterSkill';
 
 export interface PeriodicElement {
   name: string;
@@ -40,7 +40,21 @@ export class CharacterInfoComponent implements OnInit {
       mindpoints: { currentValue: 42, maximumValue: 100 },
       radiationPoints: { currentValue: 42, maximumValue: 100 },
       encumbarance: { currentValue: 42, maximumValue: 100 }
-    }
+    },
+    items: [
+      {
+        id: 0,
+        name: 'QuantenFluxGenerator',
+        weight: -1,
+        influenceToSkill: { skillToBeModified: SkillType.Technology, modifierValue: 42 }
+      },
+      {
+        id: 1,
+        name: 'JostersLangerPenis',
+        weight: 1000,
+        influenceToSkill: { skillToBeModified: SkillType.Command, modifierValue: 9001 }
+      }
+    ]
   });
 
   areAllOpen = false;

@@ -11,6 +11,7 @@ import { CharacterInfoAttributesComponent } from './character-info-attributes/ch
 import { CharacterInfoBasicsComponent } from './character-info-basics/character-info-basics.component';
 import { FormsModule } from '@angular/forms';
 import { CharacterInfoBodystatsComponent } from './character-info-bodystats/character-info-bodystats.component';
+import { CharacterInfoItemsComponent } from './character-info-items/character-info-items.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CharacterInfoBodystatsComponent } from './character-info-bodystats/char
     CharacterInfoSkillsComponent,
     CharacterInfoAttributesComponent,
     CharacterInfoBasicsComponent,
-    CharacterInfoBodystatsComponent
+    CharacterInfoBodystatsComponent,
+    CharacterInfoItemsComponent
   ],
   imports: [
     CommonModule,

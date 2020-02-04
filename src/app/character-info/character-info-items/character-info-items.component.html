@@ -1,0 +1,14 @@
+<mat-expansion-panel [expanded]="isPanelExpanded">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Items
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <ul>
+    <li *ngFor="let item of selectedCharacter.items; let i = index">
+      ID: {{ item.id }}, Name: {{ item.name }}, Weigth: {{ item.weight }} <br />
+      Influence to Skill: {{ item.influenceToSkill.skillToBeModified }}, Modifier:
+      {{ item.influenceToSkill.modifierValue }}
+    </li>
+  </ul>
+</mat-expansion-panel>

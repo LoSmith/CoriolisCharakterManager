@@ -1,4 +1,5 @@
-import { AttributeType } from '@app/shared/character/attributeType';
+import { AttributeType } from '@app/shared/character/characterAttribute';
+import { throwError } from 'rxjs';
 
 export enum SkillType {
   Dexterity = 'Dexterity',
@@ -74,4 +75,9 @@ export function GetBaseAttributeTypeOfSkill(skill: SkillType): AttributeType {
       return AttributeType.Wits;
       break;
   }
+}
+
+export interface CharacterSkill {
+  type: SkillType;
+  value: number;
 }

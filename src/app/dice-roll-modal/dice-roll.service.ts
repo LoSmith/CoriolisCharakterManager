@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Dice } from '@app/shared/dice/dice';
 import { DiceRollModalDialogData, DiceRollModalComponent } from '@app/dice-roll-modal/dice-roll-modal.component';
-import { CharacterAttribute, CharacterSkill } from '@app/shared/character/character';
+import { CharacterAttribute } from '@app/shared/character/characterAttribute';
+import { CharacterSkill } from '@app/shared/character/characterSkill';
 
 @Injectable({
   providedIn: 'root'

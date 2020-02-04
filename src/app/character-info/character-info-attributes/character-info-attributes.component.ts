@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Character, CharacterAttribute } from '@app/shared/character/character';
+import { Character } from '@app/shared/character/character';
 import { DiceRollService } from '@app/dice-roll-modal/dice-roll.service';
 import { Dice } from '@app/shared/dice/dice';
+import { CharacterAttribute } from '@app/shared/character/characterAttribute';
 
 @Component({
   selector: 'app-character-info-attributes',

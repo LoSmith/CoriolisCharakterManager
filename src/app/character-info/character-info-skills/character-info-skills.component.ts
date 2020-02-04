@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Character, CharacterAttribute, CharacterSkill } from '@app/shared/character/character';
+import { Character } from '@app/shared/character/character';
 import { Dice } from '@app/shared/dice/dice';
 import { DiceRollService } from '@app/dice-roll-modal/dice-roll.service';
+import { CharacterSkill } from '@app/shared/character/characterSkill';
 
 @Component({
   selector: 'app-character-info-skills',
