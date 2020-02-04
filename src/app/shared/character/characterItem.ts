@@ -6,8 +6,8 @@ export interface CharacterItemSkillModifier {
 }
 
 export interface CharacterItem {
-  itemId: number;
-  itemName: string;
-  itemWeight: number;
+  id: number;
+  name: string;
+  weight: number;
   influenceToSkill: CharacterItemSkillModifier; // skill [SkillType, modifier]
 }

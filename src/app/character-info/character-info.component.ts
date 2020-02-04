@@ -43,10 +43,16 @@ export class CharacterInfoComponent implements OnInit {
     },
     items: [
       {
-        itemId: 0,
-        itemName: 'itemName',
-        itemWeight: 42,
-        influenceToSkill: { skillToBeModified: SkillType.Command, modifierValue: 42 }
+        id: 0,
+        name: 'QuantenFluxGenerator',
+        weight: -1,
+        influenceToSkill: { skillToBeModified: SkillType.Technology, modifierValue: 42 }
+      },
+      {
+        id: 1,
+        name: 'JostersLangerPenis',
+        weight: 1000,
+        influenceToSkill: { skillToBeModified: SkillType.Command, modifierValue: 9001 }
       }
     ]
   });

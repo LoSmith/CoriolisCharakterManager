@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Character } from '@app/shared/character/character';
 import { Dice } from '@app/shared/dice/dice';
 import { DiceRollService } from '@app/dice-roll-modal/dice-roll.service';
-import { CharacterAttribute } from '@app/shared/character/characterAttribute';
 import { CharacterSkill } from '@app/shared/character/characterSkill';
 
 @Component({
