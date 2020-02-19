@@ -18,7 +18,7 @@ export class Dice {
    */
   public roll(): number {
     this.hasBeenRolled = true;
-    this.diceResult = Math.ceil(Math.random() * this.numberOfSides);
+    this.diceResult = Math.floor(Math.random() * this.numberOfSides) + 1;
     return this.diceResult;
   }
 

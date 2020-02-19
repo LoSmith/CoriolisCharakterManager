@@ -1,36 +1,20 @@
 import { Dice } from '@app/shared/dice/dice';
 import { CharacterSkill, GetBaseAttributeTypeOfSkill, SkillType } from '@app/shared/character/characterSkill';
 import { AttributeType, CharacterAttribute } from '@app/shared/character/characterAttribute';
-import { CharacterItem } from '@app/shared/character/characterItem';
-import { reduce } from 'rxjs/operators';
-
-export interface CharacterDrainable {
-  currentValue: number;
-  maximumValue: number;
-}
-
-export interface CharacterBodyStatus {
-  hitpoints?: CharacterDrainable;
-  mindpoints?: CharacterDrainable;
-  radiationPoints?: CharacterDrainable;
-  encumbarance?: CharacterDrainable;
-  armor?: number;
-  reputation?: number;
-}
+import { ItemArmor, ItemWeapon } from '@app/shared/item/item';
+import { CharacterBackground } from '@app/shared/character/characterBackground';
+import { CharacterName } from '@app/shared/character/characterName';
+import { CharacterBodyStat } from '@app/shared/character/characterBodyStat';
 
 export class Character {
-  name: string;
-  concept: string;
-  groupConcept: string;
-  personalProblem: string;
-  background: string;
-  icon: string;
-  xp: number;
+  background?: CharacterBackground;
+  name?: CharacterName;
+  attributes?: Array<CharacterAttribute>;
+  bodyStats?: Array<CharacterBodyStat>;
+  skills?: Array<CharacterSkill>;
 
-  attributes: CharacterAttribute[];
-  skills: CharacterSkill[];
-  bodyStatus: CharacterBodyStatus;
-  items: CharacterItem[];
+  possessedItems: Array<ItemWeapon | ItemArmor>;
+  equipedItems: Array<ItemWeapon | ItemArmor>;
 
   private static rollNumberOfDice(numberOfDiceToRoll: number): Dice[] {
     const dice: Dice[] = [];
@@ -44,10 +28,6 @@ export class Character {
     return dice;
   }
 
-  // inventory: CharacterInventory;
-
-  // private uid: number;
-
   public constructor(init?: Partial<Character>) {
     Object.assign(this, init);
   }
@@ -57,7 +37,7 @@ export class Character {
    * @param skill - the skilltype to roll
    * @param manualModifications - manual modifications for the roll
    */
-  rollSkill(skill: SkillType, manualModifications: number = 0): Dice[] {
+  public rollSkill(skill: SkillType, manualModifications: number = 0): Dice[] {
     const numberOfDiceToRoll = this.countAvailableDiceForSkill(skill) + manualModifications;
     return Character.rollNumberOfDice(numberOfDiceToRoll);
   }
@@ -67,15 +47,15 @@ export class Character {
    * @param attribute - attribute to use
    * @param manualModifications - manual modifications for the roll
    */
-  rollAttribute(attribute: AttributeType, manualModifications: number = 0): Dice[] {
+  public rollAttribute(attribute: AttributeType, manualModifications: number = 0): Dice[] {
     const numberOfDiceToRoll = this.countAvailableDiceForAttribute(attribute) + manualModifications;
     return Character.rollNumberOfDice(numberOfDiceToRoll);
   }
 
-  gainXP(additionalXp: number) {
+  public gainXP(additionalXp: number) {
     // TODO: BUG 24 + 2 = 242 .. somthing weird with the addition function
-    const xp: number = this.xp;
-    this.xp = xp + additionalXp;
+    const xp: number = this.background.xp.total;
+    this.background.xp.total = xp + additionalXp;
   }
 
   private countAvailableDiceForSkill(skill: SkillType): number {
@@ -85,25 +65,13 @@ export class Character {
     const baseAttributeToUse: AttributeType = GetBaseAttributeTypeOfSkill(skill);
     const baseAttributeValue = this.countAvailableDiceForAttribute(baseAttributeToUse);
 
-    const itemModifierValue = this.getItemModifers(skill);
+    // const itemModifierValue = this.getItemModifersForSkill(skill);
 
-    return skillValue + baseAttributeValue + itemModifierValue;
+    return skillValue + baseAttributeValue;
   }
 
   private countAvailableDiceForAttribute(attributeType: AttributeType): number {
     const attribute = this.attributes.find(item => item.type === attributeType);
     return attribute.value;
-  }
-
-  private getItemModifers(skill: SkillType) {
-    return this.items.reduce((accumulator, currentItem) => {
-      if (currentItem.influenceToSkill.skillToBeModified === skill) {
-        accumulator += currentItem.influenceToSkill.modifierValue;
-      } else {
-        // nothing to add .. wrong skill
-      }
-
-      return accumulator;
-    }, 0);
   }
 }
