@@ -43,34 +43,43 @@ export enum ItemFeatureType {
   reinforcedExoServos
 }
 
-export enum EffectedType {
-  attribute = CharacterAttribute,
-  skill,
-  bodyStat,
-  item
+export class ItemFeature {
+  name: string;
+  type?: ItemFeatureType;
+  modifier = 0;
+  skillTypeToBeModified?: SkillType;
+  userQuestionDefaultResponse?: UserQuestionDefaultResponse;
+
+  public constructor(init?: Partial<ItemFeature>) {
+    Object.assign(this, init);
+  }
+
+  userQuestionAtUse: UserInteractionFunction = () => true;
+  getDefaultResult?: () => boolean = () => {
+    let isUsableDialogResult = false;
+    if (this.userQuestionDefaultResponse === UserQuestionDefaultResponse.alwaysTrue) {
+      isUsableDialogResult = true;
+    }
+    if (this.userQuestionDefaultResponse === UserQuestionDefaultResponse.alwaysTrue) {
+      isUsableDialogResult = false;
+    }
+    return isUsableDialogResult;
+  };
 }
 
-export interface ItemFeature {
-  name: string;
-  type: ItemFeatureType;
-  userQuestionAtUse: UserInteractionFunction;
-  effectAtUse: number;
-  elementToBeEffected: ItemFeatureEffect;
+export enum UserQuestionDefaultResponse {
+  alwaysTrue,
+  alwaysFalse,
+  alwaysAsk
 }
 
 export type UserInteractionFunction = () => boolean;
-export type ItemFeatureEffect = (
-  effectedPart: CharacterBodyStat | CharacterAttribute | CharacterSkill | CharacterItemBase,
-  context: any
-) => number;
 
 const light: ItemFeature = {
-  name: 'light',
-  userQuestionAtUseon: () => {
-    return false;
-  },
-  effectAtUse: 0.5,
-  elementToBeEffected: ItemWeight
+  name: 'Light',
+  modifier: 0.5,
+  type: ItemFeatureType.light,
+  userQuestionAtUse: () => true
 };
 
 export const itemFeatures = {
