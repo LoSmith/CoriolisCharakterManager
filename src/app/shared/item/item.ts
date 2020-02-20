@@ -1,11 +1,17 @@
-import { ItemFeature, ItemFeatureType } from '@app/shared/item/itemFeatureType';
-import { CharacterSkill } from '@app/shared/character/characterSkill';
+import { ItemFeature } from '@app/shared/item/itemFeatureType';
+import { CharacterSkill, SkillType } from '@app/shared/character/characterSkill';
 
 export enum ItemRanges {
   close = -2, // -2 modifier
   short = 0, // 0 modifier
   long = 2, // +2 modifier
   extreme = 4 // +4 modifier
+}
+
+export enum ItemClassName {
+  ItemArmor = 'ItemArmor',
+  ItemWeapon = 'ItemWeapon',
+  ItemGadget = 'ItemGadget'
 }
 
 export enum ItemTechTier {
@@ -25,6 +31,8 @@ export enum ItemWeight {
   notWearable = 9001 // too heavy to wear
 }
 
+export type CharacterItem = ItemWeapon | ItemArmor | ItemGadget;
+
 export class CharacterItemBase {
   id?: string;
   name?: string;
@@ -33,9 +41,16 @@ export class CharacterItemBase {
   features?: Array<ItemFeature> = [];
   weight?: ItemWeight = ItemWeight.normal;
   amount?: number;
+  baseSkill?: SkillType;
+  protected _itemClassName: ItemClassName;
 
   constructor(init?: Partial<CharacterItemBase>) {
     Object.assign(this, init);
+    this.getItemClassType = this.getItemClassType;
+  }
+
+  public getItemClassType(): ItemClassName {
+    return this._itemClassName;
   }
 }
 
@@ -50,6 +65,7 @@ export class ItemWeapon extends CharacterItemBase {
   constructor(init?: Partial<ItemWeapon>) {
     super(init);
     Object.assign(this, init);
+    this._itemClassName = ItemClassName.ItemWeapon;
   }
 }
 
@@ -60,6 +76,7 @@ export class ItemArmor extends CharacterItemBase {
   constructor(init?: Partial<ItemArmor>) {
     super(init);
     Object.assign(this, init);
+    this._itemClassName = ItemClassName.ItemArmor;
   }
 }
 
@@ -69,5 +86,6 @@ export class ItemGadget extends CharacterItemBase {
   constructor(init?: Partial<ItemGadget>) {
     super(init);
     Object.assign(this, init);
+    this._itemClassName = ItemClassName.ItemGadget;
   }
 }

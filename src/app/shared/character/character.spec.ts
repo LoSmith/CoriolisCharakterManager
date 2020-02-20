@@ -3,26 +3,58 @@ import { AttributeType } from '@app/shared/character/characterAttribute';
 import { CharacterSkill, SkillType } from '@app/shared/character/characterSkill';
 import { Dice } from '@app/shared/dice/dice';
 import { CoriolisRoll } from '@app/shared/coriolis/roll';
-import { ItemFeature, ItemFeatureType, UserQuestionDefaultResponse } from '@app/shared/item/itemFeatureType';
+import { ItemFeature, ItemFeatureType } from '@app/shared/item/itemFeatureType';
+import { ItemArmor, ItemGadget, ItemRanges, ItemTechTier, ItemWeapon, ItemWeight } from '@app/shared/item/item';
 
 describe('Character', () => {
   let testobject: Character;
 
   const testAttributes = [
     { type: AttributeType.Agility, value: 5 },
-    { type: AttributeType.Wits, value: 3 }
+    { type: AttributeType.Wits, value: 3 },
+    { type: AttributeType.Strength, value: 5 }
   ];
   const testSkills: CharacterSkill[] = [
     { type: SkillType.Dexterity, value: 5 },
+    { type: SkillType.MeleeCombat, value: 5 },
+    { type: SkillType.RangedCombat, value: 5 },
     { type: SkillType.Observation, value: 3 }
   ];
-  const testFeatureObservation: ItemFeature = {
-    userQuestionDefaultResponse: UserQuestionDefaultResponse.alwaysTrue,
+  const testFeatureObservation: ItemFeature = new ItemFeature({
+    userQuestionAtUse: () => true,
     name: 'TestFeature',
     type: ItemFeatureType.custom,
     modifier: 10,
-    skillTypeToBeModified: SkillType.Observation
-  };
+    skillTypeToBeModified: SkillType.Observation,
+    defaultUserInput: true,
+    askForUserInput: true
+  });
+  const item1 = new ItemGadget({
+    name: 'testItem',
+    amount: 1,
+    features: [testFeatureObservation],
+    baseSkill: SkillType.Observation
+  });
+  const itemMeleeWeapon = new ItemWeapon({
+    name: 'testMeleeWeapon',
+    bonus: 3,
+    blastPower: 0,
+    weight: ItemWeight.normal,
+    cost: 10,
+    techTier: ItemTechTier.mysterious,
+    range: ItemRanges.extreme,
+    baseSkill: SkillType.MeleeCombat,
+    features: [
+      {
+        name: 'meleeBonus',
+        type: ItemFeatureType.custom,
+        modifier: 42,
+        skillTypeToBeModified: SkillType.MeleeCombat
+      }
+    ]
+  });
+
+  const testItems: Array<ItemWeapon | ItemGadget | ItemArmor> = [item1, itemMeleeWeapon];
 
   describe('Constructor', () => {
     it('creates a Character Class with no information', () => {
@@ -34,15 +66,9 @@ describe('Character', () => {
   describe('rollSkill', () => {
     beforeEach(() => {
       testobject = new Character({
-        equipedItems: [
-          {
-            id: 'testItem',
-            amount: 1,
-            features: [testFeatureObservation]
-          }
-        ],
         attributes: testAttributes,
-        skills: testSkills
+        skills: testSkills,
+        equipedItems: testItems
       });
     });
 
@@ -71,6 +97,23 @@ describe('Character', () => {
       const skillTestResult: Dice[] = CoriolisRoll.rollAttribute(AttributeType.Agility, testobject);
       expect(skillTestResult).toBeTruthy();
       expect(skillTestResult.length).toEqual(5);
+    });
+  });
+
+  describe('rollItem', () => {
+    beforeEach(() => {
+      testobject = new Character({
+        attributes: testAttributes,
+        skills: testSkills,
+        equipedItems: testItems
+      });
+    });
+
+    it('should roll an attack', () => {
+      const meleeWeapon = testobject.equipedItems.find(item => item.name === 'testMeleeWeapon');
+      const skillTestResult: Dice[] = CoriolisRoll.rollItem(meleeWeapon, testobject);
+      expect(skillTestResult).toBeTruthy();
+      expect(skillTestResult.length).toEqual(13);
     });
   });
 });
