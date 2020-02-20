@@ -22,7 +22,7 @@ describe('Dice', () => {
 
     // roll and count
     for (let i = 0; i < numberOfRolls; i++) {
-      const rollResult = testobject.roll();
+      const rollResult = testobject.roll().diceResult;
       if (rollResult < 1) {
         isAnyRollOutOfScope = true;
       }

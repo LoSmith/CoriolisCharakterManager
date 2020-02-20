@@ -1,5 +1,5 @@
 export interface CharacterName {
-  FirstName: string;
+  firstName: string;
   NickName: string;
   SureName: string;
 }

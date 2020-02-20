@@ -17,9 +17,6 @@ describe('Character', () => {
     { type: SkillType.Observation, value: 3 }
   ];
   const testFeatureObservation: ItemFeature = {
-    getDefaultUserQuestionResponse(): boolean {
-      return undefined;
-    },
     userQuestionDefaultResponse: UserQuestionDefaultResponse.alwaysTrue,
     name: 'TestFeature',
     type: ItemFeatureType.custom,
@@ -73,7 +70,7 @@ describe('Character', () => {
     it('should roll a attribute and return the amound of successes and the dice rolled', () => {
       const skillTestResult: Dice[] = CoriolisRoll.rollAttribute(AttributeType.Agility, testobject);
       expect(skillTestResult).toBeTruthy();
-      expect(skillTestResult.length).toEqual(10);
+      expect(skillTestResult.length).toEqual(5);
     });
   });
 });

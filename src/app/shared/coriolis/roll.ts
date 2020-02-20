@@ -2,7 +2,7 @@ import { CharacterSkill, GetBaseAttributeTypeOfSkill, SkillType } from '@app/sha
 import { Character } from '@app/shared/character/character';
 import { Dice } from '@app/shared/dice/dice';
 import { AttributeType } from '@app/shared/character/characterAttribute';
-import { UserQuestionDefaultResponse } from '@app/shared/item/itemFeatureType';
+import { getDefaultUserQuestionResponse, UserQuestionDefaultResponse } from '@app/shared/item/itemFeatureType';
 
 export class CoriolisRoll {
   /**
@@ -34,7 +34,7 @@ export class CoriolisRoll {
           if (featureOfItem.userQuestionDefaultResponse === UserQuestionDefaultResponse.alwaysAsk) {
             isFeatureApplicable = featureOfItem.userQuestionAtUse();
           } else {
-            isFeatureApplicable = featureOfItem.getDefaultUserQuestionResponse();
+            isFeatureApplicable = getDefaultUserQuestionResponse(featureOfItem);
           }
 
           if (isFeatureApplicable) {

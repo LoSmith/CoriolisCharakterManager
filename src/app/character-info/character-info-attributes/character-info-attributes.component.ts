@@ -3,6 +3,7 @@ import { Character } from '@app/shared/character/character';
 import { DiceRollService } from '@app/dice-roll-modal/dice-roll.service';
 import { Dice } from '@app/shared/dice/dice';
 import { CharacterAttribute } from '@app/shared/character/characterAttribute';
+import { CoriolisRoll } from '@app/shared/coriolis/roll';
 
 @Component({
   selector: 'app-character-info-attributes',
@@ -18,7 +19,7 @@ export class CharacterInfoAttributesComponent implements OnInit {
   ngOnInit() {}
 
   onDiceRollPressed(attribute: CharacterAttribute) {
-    const dice: Dice[] = this.selectedCharacter.rollAttribute(attribute.type);
+    const dice: Dice[] = CoriolisRoll.rollAttribute(attribute.type, this.selectedCharacter);
     this.diceRollService.openDialog(attribute, dice);
   }
 }

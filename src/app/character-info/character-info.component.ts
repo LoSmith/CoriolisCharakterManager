@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Character } from '@app/shared/character/character';
 import { AttributeType } from '@app/shared/character/characterAttribute';
 import { SkillType } from '@app/shared/character/characterSkill';
-import { itemStore } from '@app/shared/itemsStore/itemStore';
+import { BodyStatType } from '@app/shared/character/characterBodyStat';
 
 export interface PeriodicElement {
   name: string;
@@ -16,10 +16,20 @@ export interface PeriodicElement {
   templateUrl: './character-info.component.html',
   styleUrls: ['./character-info.component.scss']
 })
-export class CharacterInfoComponent implements OnInit {
+export class CharacterInfoComponent {
   char: Character = new Character({
-    name: 'Arashar',
-    xp: 42,
+    name: {
+      firstName: 'Arashar',
+      NickName: 'Arashar',
+      SureName: 'Abdullah al Ansari'
+    },
+    background: {
+      xp: {
+        total: 42,
+        spend: 17,
+        free: 42 - 17
+      }
+    },
     attributes: [
       { type: AttributeType.Strength, value: 5 },
       { type: AttributeType.Agility, value: 2 },
@@ -44,21 +54,17 @@ export class CharacterInfoComponent implements OnInit {
       { type: SkillType.Science, value: 1 },
       { type: SkillType.Technology, value: 3 }
     ],
-    bodyStats: {
-      reputation: 5,
-      armor: 10,
-      hitpoints: { current: 42, maximum: 100 },
-      mindpoints: { current: 42, maximum: 100 },
-      radiationPoints: { current: 42, maximum: 100 },
-      encumbarance: { current: 42, maximum: 100 }
-    },
-    items: []
+    bodyStats: [
+      { type: BodyStatType.Hitpoints, value: { maximum: 10, minimum: 0, current: 10 } },
+      { type: BodyStatType.Mindpoints, value: { maximum: 10, minimum: 0, current: 10 } },
+      { type: BodyStatType.Encumbarance, value: { maximum: 10, minimum: 0, current: 10 } },
+      { type: BodyStatType.Reputation, value: { maximum: 10, minimum: 0, current: 10 } },
+      { type: BodyStatType.RadiationPoints, value: { maximum: 10, minimum: 0, current: 10 } }
+    ]
   });
 
   areAllOpen = false;
   constructor() {}
-
-  ngOnInit() {}
 
   onGainXp(): void {
     const additionalXp = 2;

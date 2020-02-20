@@ -1,5 +1,11 @@
 import { SkillType } from '@app/shared/character/characterSkill';
 
+export enum UserQuestionDefaultResponse {
+  alwaysTrue,
+  alwaysFalse,
+  alwaysAsk
+}
+
 export enum ItemFeatureType {
   light,
   heavy,
@@ -41,41 +47,33 @@ export enum ItemFeatureType {
   custom
 }
 
+export function getDefaultUserQuestionResponse(feature: ItemFeature) {
+  let result: boolean;
+  if (feature.userQuestionDefaultResponse === UserQuestionDefaultResponse.alwaysTrue) {
+    result = true;
+  } else if (feature.userQuestionDefaultResponse === UserQuestionDefaultResponse.alwaysFalse) {
+    result = false;
+  }
+  return result;
+}
+
 export class ItemFeature {
   name: string;
-  type?: ItemFeatureType;
-  modifier = 0;
-  skillTypeToBeModified?: SkillType;
+  type: ItemFeatureType;
+  modifier: number;
+  skillTypeToBeModified: SkillType;
   userQuestionDefaultResponse: UserQuestionDefaultResponse;
+  userQuestionAtUse: UserInteractionFunctionType;
 
   public constructor(init?: Partial<ItemFeature>) {
     Object.assign(this, init);
   }
-
-  userQuestionAtUse?: UserInteractionFunctionType = () => true;
-  getDefaultUserQuestionResponse: GetDefaultResultFunctionType = () => {
-    let result = false;
-    if (this.userQuestionDefaultResponse === UserQuestionDefaultResponse.alwaysTrue) {
-      result = true;
-    }
-    if (this.userQuestionDefaultResponse === UserQuestionDefaultResponse.alwaysTrue) {
-      result = false;
-    }
-    return result;
-  };
-}
-
-export enum UserQuestionDefaultResponse {
-  alwaysTrue,
-  alwaysFalse,
-  alwaysAsk
 }
 
 export type UserInteractionFunctionType = () => boolean;
-export type GetDefaultResultFunctionType = () => boolean;
-export const light: ItemFeature = {
-  name: 'Light',
-  modifier: 0.5,
-  type: ItemFeatureType.light,
-  userQuestionAtUse: () => true
-};
+// export const light: ItemFeature = {
+//   name: 'Light',
+//   modifier: 0.5,
+//   type: ItemFeatureType.light,
+//   userQuestionAtUse: () => true
+// };
