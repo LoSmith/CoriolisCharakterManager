@@ -1,7 +1,4 @@
-import { ItemArmor, CharacterItemBase, ItemWeapon, ItemWeight } from '@app/shared/item/item';
-import { CharacterSkill, SkillType } from '@app/shared/character/characterSkill';
-import { CharacterBodyStat } from '@app/shared/character/characterBodyStat';
-import { CharacterAttribute } from '@app/shared/character/characterAttribute';
+import { SkillType } from '@app/shared/character/characterSkill';
 
 export enum ItemFeatureType {
   light,
@@ -40,7 +37,8 @@ export enum ItemFeatureType {
   thermostaticSuit,
   vacuumSuit,
   oxygenSupply,
-  reinforcedExoServos
+  reinforcedExoServos,
+  custom
 }
 
 export class ItemFeature {
@@ -48,22 +46,22 @@ export class ItemFeature {
   type?: ItemFeatureType;
   modifier = 0;
   skillTypeToBeModified?: SkillType;
-  userQuestionDefaultResponse?: UserQuestionDefaultResponse;
+  userQuestionDefaultResponse: UserQuestionDefaultResponse;
 
   public constructor(init?: Partial<ItemFeature>) {
     Object.assign(this, init);
   }
 
-  userQuestionAtUse: UserInteractionFunction = () => true;
-  getDefaultResult?: () => boolean = () => {
-    let isUsableDialogResult = false;
+  userQuestionAtUse?: UserInteractionFunctionType = () => true;
+  getDefaultUserQuestionResponse: GetDefaultResultFunctionType = () => {
+    let result = false;
     if (this.userQuestionDefaultResponse === UserQuestionDefaultResponse.alwaysTrue) {
-      isUsableDialogResult = true;
+      result = true;
     }
     if (this.userQuestionDefaultResponse === UserQuestionDefaultResponse.alwaysTrue) {
-      isUsableDialogResult = false;
+      result = false;
     }
-    return isUsableDialogResult;
+    return result;
   };
 }
 
@@ -73,15 +71,11 @@ export enum UserQuestionDefaultResponse {
   alwaysAsk
 }
 
-export type UserInteractionFunction = () => boolean;
-
-const light: ItemFeature = {
+export type UserInteractionFunctionType = () => boolean;
+export type GetDefaultResultFunctionType = () => boolean;
+export const light: ItemFeature = {
   name: 'Light',
   modifier: 0.5,
   type: ItemFeatureType.light,
   userQuestionAtUse: () => true
-};
-
-export const itemFeatures = {
-  light
 };

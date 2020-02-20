@@ -28,10 +28,10 @@ export enum ItemWeight {
 export class CharacterItemBase {
   id?: string;
   name?: string;
-  techTier?: ItemTechTier;
+  techTier?: ItemTechTier = ItemTechTier.ordinary;
   cost? = 0;
   features?: Array<ItemFeature> = [];
-  weight?: ItemWeight = 1;
+  weight?: ItemWeight = ItemWeight.normal;
   amount?: number;
 
   constructor(init?: Partial<CharacterItemBase>) {

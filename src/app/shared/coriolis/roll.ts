@@ -6,61 +6,23 @@ import { UserQuestionDefaultResponse } from '@app/shared/item/itemFeatureType';
 
 export class CoriolisRoll {
   /**
-   * rolls a number of dice and returns the dice array
-   * @param numberOfDiceToRoll the amount of dice to roll
+   * rolls an amound of dice equal to skill + baseattribute + itemModifier + TalentModifier
+   * @param skill to roll
+   * @param character to supply the fields
    */
-  private static rollNumberOfDice(numberOfDiceToRoll: number): Dice[] {
-    const dice: Dice[] = [];
-    for (let i = 0; i < numberOfDiceToRoll; i++) {
-      dice[i] = new Dice();
-    }
-    return dice;
-  }
-
-  public constructor(init?: Partial<CoriolisRoll>) {
-    Object.assign(this, init);
-  }
-
-  /**
-   * rolls a skilltype and returns the successses and the dices
-   * @param skill - the skilltype to roll
-   * @param character the Character which provides stats
-   * @param manualModifications - manual modifications for the roll
-   */
-  public rollSkill(skill: SkillType, character: Character, manualModifications: number = 0): Dice[] {
-    const numberOfDiceToRoll = this.countAvailableDiceForSkill(skill, character) + manualModifications;
-    return CoriolisRoll.rollNumberOfDice(numberOfDiceToRoll);
-  }
-
-  /**
-   * rolls a single attribute and returns the successes and the dices
-   * @param attribute - attribute to use
-   * @param character which provides attributes
-   * @param manualModifications - manual modifications for the roll
-   */
-  public rollAttribute(attribute: AttributeType, character: Character, manualModifications: number = 0): Dice[] {
-    const numberOfDiceToRoll = this.countAvailableDiceForAttribute(attribute, character) + manualModifications;
-    return CoriolisRoll.rollNumberOfDice(numberOfDiceToRoll);
-  }
-
-  private countAvailableDiceForSkill(skill: SkillType, character: Character): number {
+  static countAvailableDiceForSkill(skill: SkillType, character: Character): number {
     const usedSkill: CharacterSkill = character.skills.find(item => item.type === skill);
     const skillValue = usedSkill.value;
 
     const baseAttributeToUse: AttributeType = GetBaseAttributeTypeOfSkill(skill);
-    const baseAttributeValue = this.countAvailableDiceForAttribute(baseAttributeToUse, character);
-    const itemModifierValue = this.countItemBonusForSkill(skill, character);
-    const talentModifierValue = this.countTalentBonusForSkill(skill, character);
+    const baseAttributeValue = CoriolisRoll.countAvailableDiceForAttribute(baseAttributeToUse, character);
+    const itemModifierValue = CoriolisRoll.countItemBonusForSkill(skill, character);
+    const talentModifierValue = CoriolisRoll.countTalentBonusForSkill(skill, character);
 
     return skillValue + baseAttributeValue + itemModifierValue + talentModifierValue;
   }
 
-  private countAvailableDiceForAttribute(attributeType: AttributeType, character: Character): number {
-    const attribute = character.attributes.find(item => item.type === attributeType);
-    return attribute.value;
-  }
-
-  private countItemBonusForSkill(skill: SkillType, character: Character): number {
+  static countItemBonusForSkill(skill: SkillType, character: Character): number {
     let itemBonusDice = 0;
 
     // info: if we roll a specific weapon, we use the rollItem method instead of roll melee or ranged
@@ -72,11 +34,11 @@ export class CoriolisRoll {
           if (featureOfItem.userQuestionDefaultResponse === UserQuestionDefaultResponse.alwaysAsk) {
             isFeatureApplicable = featureOfItem.userQuestionAtUse();
           } else {
-            isFeatureApplicable = featureOfItem.getDefaultResult();
+            isFeatureApplicable = featureOfItem.getDefaultUserQuestionResponse();
           }
 
           if (isFeatureApplicable) {
-            itemBonusDice = itemBonusDice + featureOfItem.modifier;
+            itemBonusDice = itemBonusDice + item.amount * featureOfItem.modifier;
           }
         }
       }
@@ -84,8 +46,46 @@ export class CoriolisRoll {
     return itemBonusDice;
   }
 
-  private countTalentBonusForSkill(skill: SkillType, character: Character): number {
+  static countAvailableDiceForAttribute(attributeType: AttributeType, character: Character): number {
+    const attribute = character.attributes.find(item => item.type === attributeType);
+    return attribute.value;
+  }
+
+  static countTalentBonusForSkill(skill: SkillType, character: Character): number {
     const talentBonusDice = 0;
     return talentBonusDice;
+  }
+  /**
+   * rolls a number of dice and returns the dice array
+   * @param numberOfDiceToRoll the amount of dice to roll
+   */
+  static rollNumberOfDice(numberOfDiceToRoll: number): Dice[] {
+    const dice: Dice[] = [];
+    for (let i = 0; i < numberOfDiceToRoll; i++) {
+      dice[i] = new Dice().roll();
+    }
+    return dice;
+  }
+
+  /**
+   * rolls a skilltype and returns the successses and the dices
+   * @param skill - the skilltype to roll
+   * @param character the Character which provides stats
+   * @param manualModifications - manual modifications for the roll
+   */
+  static rollSkill(skill: SkillType, character: Character, manualModifications: number = 0): Dice[] {
+    const numberOfDiceToRoll = CoriolisRoll.countAvailableDiceForSkill(skill, character) + manualModifications;
+    return CoriolisRoll.rollNumberOfDice(numberOfDiceToRoll);
+  }
+
+  /**
+   * rolls a single attribute and returns the successes and the dices
+   * @param attribute - attribute to use
+   * @param character which provides attributes
+   * @param manualModifications - manual modifications for the roll
+   */
+  static rollAttribute(attribute: AttributeType, character: Character, manualModifications: number = 0): Dice[] {
+    const numberOfDiceToRoll = CoriolisRoll.countAvailableDiceForAttribute(attribute, character) + manualModifications;
+    return CoriolisRoll.rollNumberOfDice(numberOfDiceToRoll);
   }
 }
