@@ -7,7 +7,9 @@ import _ = require('lodash');
 
 export class CoriolisRoll {
   static countNumberOfDiceForArmorRoll(item: ItemArmor, character: Character) {
-    return 0;
+    let result = 0;
+    result += this.countNumberOfDiceForSkill(item.baseSkill, character);
+    return result;
   }
 
   static countNumberOfDiceForWeaponRoll(item: ItemWeapon, character: Character) {
@@ -18,7 +20,9 @@ export class CoriolisRoll {
   }
 
   static countNumberOfDiceForGadgetRoll(item: ItemGadget, character: Character) {
-    return 0;
+    let result = 0;
+    result += this.countNumberOfDiceForSkill(item.baseSkill, character);
+    return result;
   }
 
   /**
@@ -136,15 +140,11 @@ export class CoriolisRoll {
 
   /**
    * rolls a skilltype and returns the successses and the dices
-   * @param skill - the skilltype to roll
+   * @param item to be used for the roll
    * @param character the Character which provides stats
    * @param manualModifications - manual modifications for the roll
    */
-  static rollItem(
-    item: ItemArmor | ItemWeapon | ItemGadget,
-    character: Character,
-    manualModifications: number = 0
-  ): Dice[] {
+  static rollItem(item: CharacterItem, character: Character, manualModifications: number = 0): Dice[] {
     const numberOfDiceToRoll = CoriolisRoll.countNumberOfDiceForItemRoll(item, character) + manualModifications;
     return CoriolisRoll.rollNumberOfDice(numberOfDiceToRoll);
   }

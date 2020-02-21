@@ -4,7 +4,15 @@ import { CharacterSkill, SkillType } from '@app/shared/character/characterSkill'
 import { Dice } from '@app/shared/dice/dice';
 import { CoriolisRoll } from '@app/shared/coriolis/roll';
 import { ItemFeature, ItemFeatureType } from '@app/shared/item/itemFeatureType';
-import { ItemArmor, ItemGadget, ItemRanges, ItemTechTier, ItemWeapon, ItemWeight } from '@app/shared/item/item';
+import {
+  CharacterItem,
+  ItemArmor,
+  ItemGadget,
+  ItemRanges,
+  ItemTechTier,
+  ItemWeapon,
+  ItemWeight
+} from '@app/shared/item/item';
 
 describe('Character', () => {
   let testobject: Character;
@@ -12,7 +20,8 @@ describe('Character', () => {
   const testAttributes = [
     { type: AttributeType.Agility, value: 5 },
     { type: AttributeType.Wits, value: 3 },
-    { type: AttributeType.Strength, value: 5 }
+    { type: AttributeType.Strength, value: 5 },
+    { type: AttributeType.Empathy, value: 5 }
   ];
   const testSkills: CharacterSkill[] = [
     { type: SkillType.Dexterity, value: 5 },
@@ -35,6 +44,12 @@ describe('Character', () => {
     features: [testFeatureObservation],
     baseSkill: SkillType.Observation
   });
+  const testMeleeFeature = new ItemFeature({
+    name: 'meleeBonus',
+    type: ItemFeatureType.custom,
+    modifier: 42,
+    skillTypeToBeModified: SkillType.MeleeCombat
+  });
   const itemMeleeWeapon = new ItemWeapon({
     name: 'testMeleeWeapon',
     bonus: 3,
@@ -44,17 +59,15 @@ describe('Character', () => {
     techTier: ItemTechTier.mysterious,
     range: ItemRanges.extreme,
     baseSkill: SkillType.MeleeCombat,
-    features: [
-      {
-        name: 'meleeBonus',
-        type: ItemFeatureType.custom,
-        modifier: 42,
-        skillTypeToBeModified: SkillType.MeleeCombat
-      }
-    ]
+    features: [testMeleeFeature]
+  });
+  const itemObservationGadget = new ItemGadget({
+    name: 'testObservationGadget',
+    baseSkill: SkillType.Observation,
+    features: [testFeatureObservation]
   });
 
-  const testItems: Array<ItemWeapon | ItemGadget | ItemArmor> = [item1, itemMeleeWeapon];
+  const testItems: Array<CharacterItem> = [item1, itemMeleeWeapon, itemObservationGadget];
 
   describe('Constructor', () => {
     it('creates a Character Class with no information', () => {
@@ -109,11 +122,22 @@ describe('Character', () => {
       });
     });
 
-    it('should roll an attack', () => {
+    it('should roll an attack with 5 str 5 melee 42 feature bonus and 3 weapon bonus', () => {
       const meleeWeapon = testobject.equipedItems.find(item => item.name === 'testMeleeWeapon');
       const skillTestResult: Dice[] = CoriolisRoll.rollItem(meleeWeapon, testobject);
       expect(skillTestResult).toBeTruthy();
-      expect(skillTestResult.length).toEqual(13);
+      expect(skillTestResult.length).toEqual(55);
     });
+
+    it(
+      'should roll a testItem Gadget observation + item with observation feature 10 + 10 and 3 wits ' +
+        'and 3 observation',
+      () => {
+        const testItem = testobject.equipedItems.find(item => item.name === 'testObservationGadget');
+        const skillTestResult: Dice[] = CoriolisRoll.rollItem(testItem, testobject);
+        expect(skillTestResult).toBeTruthy();
+        expect(skillTestResult.length).toEqual(26);
+      }
+    );
   });
 });

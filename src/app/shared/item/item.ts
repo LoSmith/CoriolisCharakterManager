@@ -40,7 +40,7 @@ export class CharacterItemBase {
   cost? = 0;
   features?: Array<ItemFeature> = [];
   weight?: ItemWeight = ItemWeight.normal;
-  amount?: number;
+  amount? = 1;
   baseSkill?: SkillType;
   protected _itemClassName: ItemClassName;
 
@@ -81,8 +81,6 @@ export class ItemArmor extends CharacterItemBase {
 }
 
 export class ItemGadget extends CharacterItemBase {
-  activeSkill?: CharacterSkill;
-
   constructor(init?: Partial<ItemGadget>) {
     super(init);
     Object.assign(this, init);
