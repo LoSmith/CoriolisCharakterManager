@@ -3,7 +3,7 @@ import { BodyStatType } from '@app/shared/character/characterBodyStat';
 import { AttributeType } from '@app/shared/character/characterAttribute';
 import { TalentType } from '@app/shared/character/characterTalents';
 
-function updateEncumbarance(character: Character) {
+function updateEncumbrance(character: Character) {
   const generalEncumbranceMinimum = 0;
 
   const encumbaranceBodyStat = character.bodyStats.find(item => item.type === BodyStatType.Encumbarance);
@@ -15,15 +15,15 @@ function updateEncumbarance(character: Character) {
   encumbaranceBodyStat.value.maximum = strength * 2;
 
   // update current
-  let newEncumbarance = 0;
+  let newEncumbrance = 0;
   character.equipedItems.forEach(item => {
-    newEncumbarance += item.weight;
+    newEncumbrance += item.weight;
   });
-  encumbaranceBodyStat.value.current = newEncumbarance;
+  encumbaranceBodyStat.value.current = newEncumbrance;
 }
 
 function updateBodyStats(character: Character) {
-  updateEncumbarance(character);
+  updateEncumbrance(character);
 }
 
 export { updateBodyStats };
