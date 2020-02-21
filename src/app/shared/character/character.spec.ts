@@ -66,8 +66,11 @@ describe('Character', () => {
     baseSkill: SkillType.Observation,
     features: [testFeatureObservation]
   });
+  const testItemArmor = new ItemArmor({
+    name: 'testArmor'
+  });
 
-  const testItems: Array<CharacterItem> = [item1, itemMeleeWeapon, itemObservationGadget];
+  const testItems: Array<CharacterItem> = [item1, itemMeleeWeapon, itemObservationGadget, testItemArmor];
 
   describe('Constructor', () => {
     it('creates a Character Class with no information', () => {
@@ -91,9 +94,9 @@ describe('Character', () => {
       expect(skillTestResult.length).toEqual(10);
     });
 
-    it('should roll 12 dice. 3 attribute, 3 skill, 10 item = 16 dice', () => {
+    it('should roll 12 dice. 3 attribute, 3 skill, 10 item, 10 item = 26 dice', () => {
       const skillTestResult: Dice[] = CoriolisRoll.rollSkill(SkillType.Observation, testobject);
-      expect(skillTestResult.length).toEqual(16);
+      expect(skillTestResult.length).toEqual(26);
     });
   });
 
@@ -139,5 +142,12 @@ describe('Character', () => {
         expect(skillTestResult.length).toEqual(26);
       }
     );
+
+    it('should roll a testArmor with 0 dice, because there is no baseskill attached', () => {
+      const testItem = testobject.equipedItems.find(item => item.name === 'testArmor');
+      const skillTestResult: Dice[] = CoriolisRoll.rollItem(testItem, testobject);
+      expect(skillTestResult).toBeTruthy();
+      expect(skillTestResult.length).toEqual(0);
+    });
   });
 });

@@ -57,6 +57,10 @@ export class CoriolisRoll {
    * @param character to supply the fields
    */
   static countNumberOfDiceForSkill(skill: SkillType, character: Character): number {
+    if (_.isNil(skill)) {
+      return 0;
+    }
+
     const usedSkill: CharacterSkill = character.skills.find(item => item.type === skill);
     const skillValue = usedSkill.value;
 
