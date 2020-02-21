@@ -3,6 +3,7 @@ import { Character } from '@app/shared/character/character';
 import { Dice } from '@app/shared/dice/dice';
 import { DiceRollService } from '@app/dice-roll-modal/dice-roll.service';
 import { CharacterSkill } from '@app/shared/character/characterSkill';
+import { CoriolisRoll } from '@app/shared/coriolis/roll';
 
 @Component({
   selector: 'app-character-info-skills',
@@ -18,7 +19,7 @@ export class CharacterInfoSkillsComponent implements OnInit {
   ngOnInit() {}
 
   onDiceRollPressed(skill: CharacterSkill) {
-    const dice: Dice[] = this.selectedCharacter.rollSkill(skill.type);
+    const dice: Dice[] = CoriolisRoll.rollSkill(skill.type, this.selectedCharacter);
     this.diceRollService.openDialog(skill, dice);
   }
 }

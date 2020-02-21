@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Character } from '@app/shared/character/character';
 import { AttributeType } from '@app/shared/character/characterAttribute';
 import { SkillType } from '@app/shared/character/characterSkill';
+import { BodyStatType } from '@app/shared/character/characterBodyStat';
 
 export interface PeriodicElement {
   name: string;
@@ -15,52 +16,55 @@ export interface PeriodicElement {
   templateUrl: './character-info.component.html',
   styleUrls: ['./character-info.component.scss']
 })
-export class CharacterInfoComponent implements OnInit {
+export class CharacterInfoComponent {
   char: Character = new Character({
-    name: 'Arashar',
-    xp: 42,
+    name: {
+      firstName: 'Arashar',
+      NickName: 'Arashar',
+      SureName: 'Abdullah al Ansari'
+    },
+    background: {
+      xp: {
+        total: 42,
+        spend: 17,
+        free: 42 - 17
+      }
+    },
     attributes: [
-      { type: AttributeType.Strength, value: 1 },
+      { type: AttributeType.Strength, value: 5 },
       { type: AttributeType.Agility, value: 2 },
-      { type: AttributeType.Wits, value: 3 },
-      { type: AttributeType.Empathy, value: 4 }
+      { type: AttributeType.Wits, value: 5 },
+      { type: AttributeType.Empathy, value: 3 }
     ],
     skills: [
-      { type: SkillType.Command, value: 5 },
-      { type: SkillType.Culture, value: 4 },
-      { type: SkillType.DataDjinn, value: 3 },
-      { type: SkillType.Force, value: 2 },
-      { type: SkillType.Manipulation, value: 1 },
-      { type: SkillType.Survival, value: 0 }
+      { type: SkillType.Dexterity, value: 0 },
+      { type: SkillType.Force, value: 3 },
+      { type: SkillType.Infiltration, value: 0 },
+      { type: SkillType.Manipulation, value: 0 },
+      { type: SkillType.MeleeCombat, value: 5 },
+      { type: SkillType.Observation, value: 1 },
+      { type: SkillType.RangedCombat, value: 0 },
+      { type: SkillType.Survival, value: 0 },
+      { type: SkillType.Command, value: 0 },
+      { type: SkillType.Culture, value: 1 },
+      { type: SkillType.DataDjinn, value: 5 },
+      { type: SkillType.Medicurgy, value: 0 },
+      { type: SkillType.MysticalPowers, value: 0 },
+      { type: SkillType.Pilot, value: 0 },
+      { type: SkillType.Science, value: 1 },
+      { type: SkillType.Technology, value: 3 }
     ],
-    bodyStatus: {
-      reputation: 100,
-      armor: 100,
-      hitpoints: { currentValue: 42, maximumValue: 100 },
-      mindpoints: { currentValue: 42, maximumValue: 100 },
-      radiationPoints: { currentValue: 42, maximumValue: 100 },
-      encumbarance: { currentValue: 42, maximumValue: 100 }
-    },
-    items: [
-      {
-        id: 0,
-        name: 'QuantenFluxGenerator',
-        weight: -1,
-        influenceToSkill: { skillToBeModified: SkillType.Technology, modifierValue: 42 }
-      },
-      {
-        id: 1,
-        name: 'JostersLangerPenis',
-        weight: 1000,
-        influenceToSkill: { skillToBeModified: SkillType.Command, modifierValue: 9001 }
-      }
+    bodyStats: [
+      { type: BodyStatType.Hitpoints, value: { maximum: 10, minimum: 0, current: 10 } },
+      { type: BodyStatType.Mindpoints, value: { maximum: 10, minimum: 0, current: 10 } },
+      { type: BodyStatType.Encumbarance, value: { maximum: 10, minimum: 0, current: 10 } },
+      { type: BodyStatType.Reputation, value: { maximum: 10, minimum: 0, current: 10 } },
+      { type: BodyStatType.RadiationPoints, value: { maximum: 10, minimum: 0, current: 10 } }
     ]
   });
 
   areAllOpen = false;
   constructor() {}
-
-  ngOnInit() {}
 
   onGainXp(): void {
     const additionalXp = 2;

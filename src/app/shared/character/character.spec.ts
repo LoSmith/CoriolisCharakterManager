@@ -1,108 +1,99 @@
-import { Character, CharacterBodyStatus } from '@app/shared/character/character';
+import { Character } from '@app/shared/character/character';
 import { AttributeType } from '@app/shared/character/characterAttribute';
 import { CharacterSkill, SkillType } from '@app/shared/character/characterSkill';
 import { Dice } from '@app/shared/dice/dice';
+import { CoriolisRoll } from '@app/shared/coriolis/roll';
+import { ItemFeature, ItemFeatureType } from '@app/shared/item/itemFeatureType';
+import {
+  CharacterItem,
+  ItemArmor,
+  ItemGadget,
+  ItemRanges,
+  ItemTechTier,
+  ItemWeapon,
+  ItemWeight
+} from '@app/shared/item/item';
 
 describe('Character', () => {
   let testobject: Character;
+
+  const testAttributes = [
+    { type: AttributeType.Agility, value: 5 },
+    { type: AttributeType.Wits, value: 3 },
+    { type: AttributeType.Strength, value: 5 },
+    { type: AttributeType.Empathy, value: 5 }
+  ];
+  const testSkills: CharacterSkill[] = [
+    { type: SkillType.Dexterity, value: 5 },
+    { type: SkillType.MeleeCombat, value: 5 },
+    { type: SkillType.RangedCombat, value: 5 },
+    { type: SkillType.Observation, value: 3 }
+  ];
+  const testFeatureObservation: ItemFeature = new ItemFeature({
+    userQuestionAtUse: () => true,
+    name: 'TestFeature',
+    type: ItemFeatureType.custom,
+    modifier: 10,
+    skillTypeToBeModified: SkillType.Observation,
+    defaultUserInput: true,
+    askForUserInput: true
+  });
+  const item1 = new ItemGadget({
+    name: 'testItem',
+    amount: 1,
+    features: [testFeatureObservation],
+    baseSkill: SkillType.Observation
+  });
+  const testMeleeFeature = new ItemFeature({
+    name: 'meleeBonus',
+    type: ItemFeatureType.custom,
+    modifier: 42,
+    skillTypeToBeModified: SkillType.MeleeCombat
+  });
+  const itemMeleeWeapon = new ItemWeapon({
+    name: 'testMeleeWeapon',
+    bonus: 3,
+    blastPower: 0,
+    weight: ItemWeight.normal,
+    cost: 10,
+    techTier: ItemTechTier.mysterious,
+    range: ItemRanges.extreme,
+    baseSkill: SkillType.MeleeCombat,
+    features: [testMeleeFeature]
+  });
+  const itemObservationGadget = new ItemGadget({
+    name: 'testObservationGadget',
+    baseSkill: SkillType.Observation,
+    features: [testFeatureObservation]
+  });
+
+  const testItems: Array<CharacterItem> = [item1, itemMeleeWeapon, itemObservationGadget];
 
   describe('Constructor', () => {
     it('creates a Character Class with no information', () => {
       testobject = new Character();
       expect(testobject).toBeTruthy();
     });
-
-    it('creates a Character with a partial argument List', () => {
-      testobject = new Character({
-        name: 'test'
-      });
-      expect(testobject.name).toEqual('test');
-    });
-  });
-
-  describe('Skills', () => {
-    it('should create a character with a defined skill', () => {
-      const testSkill: CharacterSkill = { type: SkillType.Command, value: 3 };
-      testobject = new Character({
-        skills: [testSkill, testSkill]
-      });
-
-      expect(testobject).toBeTruthy();
-      expect(testobject.skills[0]).toEqual(testSkill);
-    });
-  });
-
-  describe('Attribute', () => {
-    it('should create a character with a defined attribute', () => {
-      const testAttribute = { type: AttributeType.Agility, value: 1 };
-      testobject = new Character({
-        name: 'test',
-        attributes: [testAttribute]
-      });
-
-      expect(testobject).toBeTruthy();
-      expect(testobject.attributes[0]).toEqual(testAttribute);
-    });
-
-    it('should create a char with a empty array of attributes', () => {
-      const testAttribute = { type: AttributeType.Agility, value: 1 };
-      testobject = new Character({
-        name: 'test',
-        attributes: []
-      });
-
-      expect(testobject).toBeTruthy();
-      expect(testobject.attributes[0]).toEqual(undefined);
-    });
-  });
-
-  describe('BodyStatus', () => {
-    it('should create a character with a defined BodyStatus', () => {
-      const testBodyStatus = {
-        hitpoints: { currentValue: 5, maximumValue: 10 }
-      };
-      testobject = new Character({
-        name: 'test',
-        bodyStatus: testBodyStatus
-      });
-
-      expect(testobject).toBeTruthy();
-    });
-
-    it('should create a character with a defined BodyStatus', () => {
-      const testBodyStatus: CharacterBodyStatus = {
-        hitpoints: { currentValue: 5, maximumValue: 10 },
-        mindpoints: { currentValue: 5, maximumValue: 10 },
-        armor: 10,
-        encumbarance: { currentValue: 5, maximumValue: 10 },
-        radiationPoints: { currentValue: 5, maximumValue: 10 },
-        reputation: 120
-      };
-      testobject = new Character({
-        name: 'test',
-        bodyStatus: testBodyStatus
-      });
-
-      expect(testobject).toBeTruthy();
-    });
   });
 
   describe('rollSkill', () => {
-    const testAttribute = { type: AttributeType.Agility, value: 5 };
-    const testSkill: CharacterSkill = { type: SkillType.Dexterity, value: 5 };
-
     beforeEach(() => {
       testobject = new Character({
-        name: 'test',
-        attributes: [testAttribute],
-        skills: [testSkill]
+        attributes: testAttributes,
+        skills: testSkills,
+        equipedItems: testItems
       });
     });
 
     it('should roll 10 dice from a defined skill and determine the amount of successes', () => {
-      const skillTestResult: Dice[] = testobject.rollSkill(SkillType.Dexterity, 0);
+      const skillTestResult: Dice[] = CoriolisRoll.rollSkill(SkillType.Dexterity, testobject, 0);
       expect(skillTestResult).toBeTruthy();
       expect(skillTestResult.length).toEqual(10);
+    });
+
+    it('should roll 12 dice. 3 attribute, 3 skill, 10 item = 16 dice', () => {
+      const skillTestResult: Dice[] = CoriolisRoll.rollSkill(SkillType.Observation, testobject);
+      expect(skillTestResult.length).toEqual(16);
     });
   });
 
@@ -111,15 +102,42 @@ describe('Character', () => {
 
     beforeEach(() => {
       testobject = new Character({
-        name: 'test',
         attributes: [testAttribute]
       });
     });
 
     it('should roll a attribute and return the amound of successes and the dice rolled', () => {
-      const skillTestResult: Dice[] = testobject.rollAttribute(AttributeType.Agility, 5);
+      const skillTestResult: Dice[] = CoriolisRoll.rollAttribute(AttributeType.Agility, testobject);
       expect(skillTestResult).toBeTruthy();
-      expect(skillTestResult.length).toEqual(10);
+      expect(skillTestResult.length).toEqual(5);
     });
+  });
+
+  describe('rollItem', () => {
+    beforeEach(() => {
+      testobject = new Character({
+        attributes: testAttributes,
+        skills: testSkills,
+        equipedItems: testItems
+      });
+    });
+
+    it('should roll an attack with 5 str 5 melee 42 feature bonus and 3 weapon bonus', () => {
+      const meleeWeapon = testobject.equipedItems.find(item => item.name === 'testMeleeWeapon');
+      const skillTestResult: Dice[] = CoriolisRoll.rollItem(meleeWeapon, testobject);
+      expect(skillTestResult).toBeTruthy();
+      expect(skillTestResult.length).toEqual(55);
+    });
+
+    it(
+      'should roll a testItem Gadget observation + item with observation feature 10 + 10 and 3 wits ' +
+        'and 3 observation',
+      () => {
+        const testItem = testobject.equipedItems.find(item => item.name === 'testObservationGadget');
+        const skillTestResult: Dice[] = CoriolisRoll.rollItem(testItem, testobject);
+        expect(skillTestResult).toBeTruthy();
+        expect(skillTestResult.length).toEqual(26);
+      }
+    );
   });
 });

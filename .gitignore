@@ -1,5 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# copyright stuff which will not be commited
+/src/assets/items/*
+
 # Compiled output
 /dist
 /tmp

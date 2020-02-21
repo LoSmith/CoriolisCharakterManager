@@ -5,10 +5,10 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
   <ul>
-    <li *ngFor="let item of selectedCharacter.items; let i = index">
+    <li *ngFor="let item of selectedCharacter.equipedItems; let i = index">
       ID: {{ item.id }}, Name: {{ item.name }}, Weigth: {{ item.weight }} <br />
-      Influence to Skill: {{ item.influenceToSkill.skillToBeModified }}, Modifier:
-      {{ item.influenceToSkill.modifierValue }}
+      Influence to Skill: {{ item.skillToBeInfluenced.skillToBeModified }}, Modifier:
+      {{ item.skillToBeInfluenced.modifierValue }}
     </li>
   </ul>
 </mat-expansion-panel>
