@@ -1,8 +1,8 @@
 import { SkillType } from '@app/shared/character/characterSkill';
 
 export enum ItemFeatureType {
-  light,
-  heavy,
+  // light,
+  // heavy,
   bulky,
   small,
   long,
@@ -56,10 +56,3 @@ export class ItemFeature {
 
   userQuestionAtUse?: UserInteractionFunctionType = () => true;
 }
-export const light: ItemFeature = {
-  skillTypeToBeModified: undefined,
-  name: 'Light',
-  modifier: 0.5,
-  type: ItemFeatureType.light,
-  userQuestionAtUse: () => true
-};

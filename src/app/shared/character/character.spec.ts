@@ -3,7 +3,7 @@ import { AttributeType } from '@app/shared/character/characterAttribute';
 import { CharacterSkill, SkillType } from '@app/shared/character/characterSkill';
 import { Dice } from '@app/shared/dice/dice';
 import { CoriolisRoll } from '@app/shared/coriolis/roll';
-import { ItemFeature, ItemFeatureType } from '@app/shared/item/itemFeatureType';
+import { ItemFeature, ItemFeatureType } from '@app/shared/item/itemFeature';
 import {
   CharacterItem,
   ItemArmor,
@@ -13,6 +13,7 @@ import {
   ItemWeapon,
   ItemWeight
 } from '@app/shared/item/item';
+import { BodyStatType, CharacterBodyStat } from '@app/shared/character/characterBodyStat';
 
 describe('Character', () => {
   let testobject: Character;
@@ -69,6 +70,14 @@ describe('Character', () => {
   const testItemArmor = new ItemArmor({
     name: 'testArmor'
   });
+  const testEncumbaranceBodyStat: CharacterBodyStat = {
+    type: BodyStatType.Encumbarance,
+    value: {
+      current: 0,
+      minimum: 0,
+      maximum: 0
+    }
+  };
 
   const testItems: Array<CharacterItem> = [item1, itemMeleeWeapon, itemObservationGadget, testItemArmor];
 
@@ -148,6 +157,24 @@ describe('Character', () => {
       const skillTestResult: Dice[] = CoriolisRoll.rollItem(testItem, testobject);
       expect(skillTestResult).toBeTruthy();
       expect(skillTestResult.length).toEqual(0);
+    });
+  });
+
+  describe('calculate Encumbarance', () => {
+    beforeEach(() => {
+      testobject = new Character({
+        attributes: testAttributes,
+        skills: testSkills,
+        equipedItems: testItems,
+        bodyStats: [testEncumbaranceBodyStat]
+      });
+    });
+
+    it('should calculate the general encumbarance', () => {
+      const encumbaranceBodyStat = testobject.bodyStats.find(item => item.type === BodyStatType.Encumbarance);
+      expect(encumbaranceBodyStat.value.current).toEqual(0);
+      testobject.updateBodyStats();
+      expect(encumbaranceBodyStat.value.current).toEqual(4);
     });
   });
 });

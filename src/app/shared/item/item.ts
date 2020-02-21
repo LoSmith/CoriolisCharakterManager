@@ -1,5 +1,5 @@
-import { ItemFeature } from '@app/shared/item/itemFeatureType';
-import { CharacterSkill, SkillType } from '@app/shared/character/characterSkill';
+import { ItemFeature, ItemFeatureType } from '@app/shared/item/itemFeature';
+import { SkillType } from '@app/shared/character/characterSkill';
 
 export enum ItemRanges {
   close = -2, // -2 modifier
@@ -46,7 +46,6 @@ export class CharacterItemBase {
 
   constructor(init?: Partial<CharacterItemBase>) {
     Object.assign(this, init);
-    this.getItemClassType = this.getItemClassType;
   }
 
   public getItemClassType(): ItemClassName {
