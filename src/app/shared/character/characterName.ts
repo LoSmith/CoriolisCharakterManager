@@ -1,5 +1,5 @@
 export interface CharacterName {
   firstName: string;
-  NickName: string;
-  SureName: string;
+  nickName: string;
+  sureName: string;
 }

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Character } from '@app/shared/character/character';
 import { AttributeType } from '@app/shared/character/characterAttribute';
 import { SkillType } from '@app/shared/character/characterSkill';
 import { BodyStatType } from '@app/shared/character/characterBodyStat';
+import { CharacterOrigin } from '@app/shared/character/characterBackground';
 
 export interface PeriodicElement {
   name: string;
@@ -20,10 +21,11 @@ export class CharacterInfoComponent {
   char: Character = new Character({
     name: {
       firstName: 'Arashar',
-      NickName: 'Arashar',
-      SureName: 'Abdullah al Ansari'
+      nickName: '',
+      sureName: 'Abdullah al Ansari'
     },
     background: {
+      origin: CharacterOrigin.Firstcome,
       xp: {
         total: 42,
         spend: 17,

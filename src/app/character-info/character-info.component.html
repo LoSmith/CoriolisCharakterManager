@@ -1,6 +1,6 @@
 <div class="container">
   <mat-card class="alignLeft">
-    <h2 class="alignLeft">Character: {{ char.name }}</h2>
+    <h2 class="alignLeft">Character: {{ char.name.firstName }} {{ char.name.nickName }} {{ char.name.sureName }}</h2>
     <button mat-raised-button color="primary" (click)="onToggleAll()">All Collapsed = {{ !areAllOpen }}</button>
     <button mat-raised-button color="primary" (click)="onGainXp()">GainXP</button>
     <br />

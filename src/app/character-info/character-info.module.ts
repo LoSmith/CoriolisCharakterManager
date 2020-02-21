@@ -12,6 +12,7 @@ import { CharacterInfoBasicsComponent } from './character-info-basics/character-
 import { FormsModule } from '@angular/forms';
 import { CharacterInfoBodystatsComponent } from './character-info-bodystats/character-info-bodystats.component';
 import { CharacterInfoItemsComponent } from './character-info-items/character-info-items.component';
+import { SharedModule } from '@app/shared';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CharacterInfoItemsComponent } from './character-info-items/character-in
     FlexLayoutModule,
     MaterialModule,
     CharacterInfoRoutingRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class CharacterInfoModule {}

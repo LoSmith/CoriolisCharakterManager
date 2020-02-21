@@ -1,20 +1,62 @@
-<mat-expansion-panel [expanded]="isPanelExpanded">
+<mat-expansion-panel [expanded]="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
       Basic Information
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <mat-form-field> <input matInput placeholder="Name" [(ngModel)]="character.name"/></mat-form-field>
-  <mat-form-field> <input matInput placeholder="XP" [(ngModel)]="character.xp"/></mat-form-field>
+  <mat-form-field> <input matInput placeholder="Firstname" [(ngModel)]="character.name.firstName"/></mat-form-field>
+  <mat-form-field> <input matInput placeholder="Nickname" [(ngModel)]="character.name.nickName"/></mat-form-field>
+  <mat-form-field> <input matInput placeholder="Surename" [(ngModel)]="character.name.sureName"/></mat-form-field>
+
   <br />
-  <mat-form-field> <input matInput placeholder="Concept" [(ngModel)]="character.concept"/></mat-form-field>
-  <mat-form-field> <input matInput placeholder="Icon" [(ngModel)]="character.icon"/></mat-form-field>
-  <mat-form-field> <input matInput placeholder="Background" [(ngModel)]="character.background"/></mat-form-field>
+  <mat-form-field>
+    <mat-label>Origin</mat-label>
+    <mat-select [(ngModel)]="character.background.origin">
+      <mat-option *ngFor="let origin of characterOrigin | enumToArray" [value]="characterOrigin">
+        {{ origin }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Home System</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let homeSystem of characterHomeSystem | enumToArray" [value]="characterHomeSystem">
+        {{ homeSystem }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Up Bringing</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let upbringing of characterUpBringing | enumToArray" [value]="characterUpBringing">
+        {{ upbringing }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Concept</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let concept of characterConcept | enumToArray" [value]="characterConcept">
+        {{ concept }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <br />
+  <mat-form-field>
+    <mat-label>Concept</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let groupConcept of characterGroupConcept | enumToArray" [value]="characterGroupConcept">
+        {{ groupConcept }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <mat-form-field
-    ><textarea matInput placeholder="GroupConcept" [(ngModel)]="character.groupConcept"></textarea
+    ><textarea matInput placeholder="PersonalProblem" [(ngModel)]="character.background.personalProblem"></textarea
   ></mat-form-field>
-  <mat-form-field
-    ><textarea matInput placeholder="PersonalProblem" [(ngModel)]="character.personalProblem"></textarea
-  ></mat-form-field>
+  <mat-form-field> <input matInput placeholder="XP" [(ngModel)]="character.background.xp"/></mat-form-field>
 </mat-expansion-panel>
