@@ -2,7 +2,7 @@ import { Character } from '@app/shared/character/character';
 import { AttributeType } from '@app/shared/character/characterAttribute';
 import { CharacterSkill, SkillType } from '@app/shared/character/characterSkill';
 import { Dice } from '@app/shared/dice/dice';
-import { CoriolisRoll } from '@app/shared/coriolis/roll';
+import { CoriolisRoll } from '@app/shared/coriolis/coriolisRoll';
 import { ItemFeature, ItemFeatureType } from '@app/shared/item/itemFeature';
 import {
   CharacterItem,

@@ -4,11 +4,11 @@ export interface CharacterBodyStat {
 }
 
 export enum BodyStatType {
-  Hitpoints,
-  Mindpoints,
-  Encumbarance,
-  RadiationPoints,
-  Reputation
+  Hitpoints = 'Hitpoints',
+  Mindpoints = 'Mindpoints',
+  Encumbarance = 'Encumbarance',
+  RadiationPoints = 'RadiationPoints',
+  Reputation = 'Reputation'
 }
 
 export interface DrainableStat {

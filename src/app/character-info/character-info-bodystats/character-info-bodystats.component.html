@@ -4,16 +4,23 @@
       Body Stats
     </mat-panel-title>
   </mat-expansion-panel-header>
-  Hitpoints:
-  <mat-form-field> <input matInput [(ngModel)]="character.hitpoints.currentValue" /> </mat-form-field>
-  Mindpoints:
-  <mat-form-field> <input matInput [(ngModel)]="character.mindpoints.currentValue" /> </mat-form-field>
+  <mat-placeholder *ngFor="let bodystat of character.bodyStats; let last = last; let i = index">
+    <mat-form-field>
+      <label>
+        <input matInput placeholder="{{ bodystat.type }}" [(ngModel)]="bodystat.value.current" />
+      </label>
+    </mat-form-field>
+    <div *ngIf="(i + 1) % 2 == 0"></div>
+  </mat-placeholder>
+
   <br />
-  RadiationPoints:
-  <mat-form-field> <input matInput [(ngModel)]="character.radiationPoints.currentValue" /> </mat-form-field>
-  Encumbarance:
-  <mat-form-field> <input matInput [(ngModel)]="character.encumbarance.currentValue" /> </mat-form-field>
-  <br />
-  Armor: <mat-form-field> <input matInput [(ngModel)]="character.armor" /> </mat-form-field> Reputation:
-  <mat-form-field> <input matInput [(ngModel)]="character.reputation" /> </mat-form-field>
+
+  <mat-placeholder *ngFor="let bodystat of character.bodyStats; let last = last; let i = index">
+    <mat-form-field>
+      <label>
+        <input matInput placeholder="{{ bodystat.type }}" [(ngModel)]="bodystat.value.current" />
+      </label>
+    </mat-form-field>
+    <div *ngIf="(i + 1) % 2 == 0"></div>
+  </mat-placeholder>
 </mat-expansion-panel>
