@@ -1,7 +1,7 @@
 export enum StarSystem {
-  Algol,
-  Mira,
-  Kua,
-  Dabaran,
-  Zalos
+  Algol = 'Algol',
+  Mira = 'Mira',
+  Kua = 'Kua',
+  Dabaran = 'Dabaran',
+  Zalos = 'Zalos'
 }

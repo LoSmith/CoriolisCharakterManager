@@ -29,9 +29,7 @@ export class Character {
   }
 
   public gainXP(additionalXp: number) {
-    // TODO: BUG 24 + 2 = 242 .. something weird with the addition function
-    const xp = this.background.xp.total;
-    this.background.xp.total = xp + additionalXp;
+    this.background.xp.free += additionalXp;
   }
 
   updateBodyStats() {

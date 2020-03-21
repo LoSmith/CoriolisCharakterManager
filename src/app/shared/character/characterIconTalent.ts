@@ -1,11 +1,11 @@
 export enum CharacterIconTalent {
-  TheLadyOfTearsTalent,
-  TheDancersTalent,
-  TheGamblersTalent,
-  TheMerchantsTalent,
-  TheDeckhandsTalent,
-  TheTravelersTalent,
-  TheMessengersTalent,
-  TheJudgesTalent,
-  TheFacelessOnesTalent
+  TheLadyOfTearsTalent = 'TheLadyOfTearsTalent',
+  TheDancersTalent = 'TheDancersTalent',
+  TheGamblersTalent = 'TheGamblersTalent',
+  TheMerchantsTalent = 'TheMerchantsTalent',
+  TheDeckhandsTalent = 'TheDeckhandsTalent',
+  TheTravelersTalent = 'TheTravelersTalent',
+  TheMessengersTalent = 'TheMessengersTalent',
+  TheJudgesTalent = 'TheJudgesTalent',
+  TheFacelessOnesTalent = 'TheFacelessOnesTalent'
 }

@@ -4,6 +4,8 @@ import { AttributeType } from '@app/shared/character/characterAttribute';
 import { SkillType } from '@app/shared/character/characterSkill';
 import { BodyStatType } from '@app/shared/character/characterBodyStat';
 import { CharacterOrigin } from '@app/shared/character/characterBackground';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { StarSystem } from '@app/shared/starSystem/system';
 
 export interface PeriodicElement {
   name: string;
@@ -18,20 +20,28 @@ export interface PeriodicElement {
   styleUrls: ['./character-info.component.scss']
 })
 export class CharacterInfoComponent {
+  // char: Character = exampleCharacter;
   char: Character = new Character({
     name: {
       firstName: 'Arashar',
-      nickName: '',
+      nickName: 'badass',
       sureName: 'Abdullah al Ansari'
     },
     background: {
       origin: CharacterOrigin.Firstcome,
+      homeSystem: StarSystem.Algol,
       xp: {
-        total: 42,
-        spend: 17,
-        free: 42 - 17
+        spent: 5,
+        free: 42
       }
     },
+    bodyStats: [
+      { type: BodyStatType.Hitpoints, value: { maximum: 10, minimum: 0, current: 5 } },
+      { type: BodyStatType.Mindpoints, value: { maximum: 10, minimum: 0, current: 10 } },
+      { type: BodyStatType.Encumbarance, value: { maximum: 8, minimum: 0, current: 5 } },
+      { type: BodyStatType.Reputation, value: { current: 10, minimum: 0 } },
+      { type: BodyStatType.RadiationPoints, value: { current: 10, minimum: 0 } }
+    ],
     attributes: [
       { type: AttributeType.Strength, value: 5 },
       { type: AttributeType.Agility, value: 2 },
@@ -56,24 +66,26 @@ export class CharacterInfoComponent {
       { type: SkillType.Science, value: 1 },
       { type: SkillType.Technology, value: 3 }
     ],
-    bodyStats: [
-      { type: BodyStatType.Hitpoints, value: { maximum: 10, minimum: 0, current: 10 } },
-      { type: BodyStatType.Mindpoints, value: { maximum: 10, minimum: 0, current: 10 } },
-      { type: BodyStatType.Encumbarance, value: { maximum: 10, minimum: 0, current: 10 } },
-      { type: BodyStatType.Reputation, value: { maximum: 10, minimum: 0, current: 10 } },
-      { type: BodyStatType.RadiationPoints, value: { maximum: 10, minimum: 0, current: 10 } }
-    ]
+    equipedItems: [],
+    spaceShipItems: []
   });
 
   areAllOpen = false;
-  constructor() {}
+  constructor(private _snackBar: MatSnackBar) {}
 
   onGainXp(): void {
-    const additionalXp = 2;
+    const additionalXp = 1;
     this.char.gainXP(additionalXp);
   }
 
   onToggleAll() {
     this.areAllOpen = !this.areAllOpen;
+  }
+
+  onSaveCharacter() {
+    const result = this.char;
+    const snackBarRef = this._snackBar.open(JSON.stringify(result), 'close', {
+      duration: 10000
+    });
   }
 }

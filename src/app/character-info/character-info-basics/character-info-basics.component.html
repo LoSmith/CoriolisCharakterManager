@@ -1,62 +1,116 @@
-<mat-expansion-panel [expanded]="true">
+<mat-expansion-panel [expanded]="isPanelExpanded">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      Basic Information
+      <strong>Basic Information</strong>
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <mat-form-field> <input matInput placeholder="Firstname" [(ngModel)]="character.name.firstName"/></mat-form-field>
-  <mat-form-field> <input matInput placeholder="Nickname" [(ngModel)]="character.name.nickName"/></mat-form-field>
-  <mat-form-field> <input matInput placeholder="Surename" [(ngModel)]="character.name.sureName"/></mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Firstname</mat-label>
+    <input matInput placeholder="Firstname" [(ngModel)]="character.name.firstName" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Nickname</mat-label>
+    <label>
+      <input matInput placeholder="Nickname" [(ngModel)]="character.name.nickName" />
+    </label>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Surename</mat-label>
+    <label>
+      <input matInput placeholder="Surename" [(ngModel)]="character.name.sureName" />
+    </label>
+  </mat-form-field>
 
   <br />
-  <mat-form-field>
+  <mat-form-field appearance="outline">
     <mat-label>Origin</mat-label>
     <mat-select [(ngModel)]="character.background.origin">
-      <mat-option *ngFor="let origin of characterOrigin | enumToArray" [value]="characterOrigin">
-        {{ origin }}
+      <mat-option *ngFor="let origin of characterOrigin | enumToArray" [value]="characterOrigin[origin]">
+        {{ characterOrigin[origin] }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field appearance="outline">
     <mat-label>Home System</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let homeSystem of characterHomeSystem | enumToArray" [value]="characterHomeSystem">
-        {{ homeSystem }}
+    <mat-select [(ngModel)]="character.background.homeSystem">
+      <mat-option
+        *ngFor="let homeSystem of characterHomeSystem | enumToArray"
+        [value]="characterHomeSystem[homeSystem]"
+      >
+        {{ characterHomeSystem[homeSystem] }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field appearance="outline">
     <mat-label>Up Bringing</mat-label>
     <mat-select>
-      <mat-option *ngFor="let upbringing of characterUpBringing | enumToArray" [value]="characterUpBringing">
-        {{ upbringing }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Concept</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let concept of characterConcept | enumToArray" [value]="characterConcept">
-        {{ concept }}
+      <mat-option
+        *ngFor="let upbringing of characterUpBringing | enumToArray"
+        [value]="characterUpBringing[upbringing]"
+      >
+        {{ characterUpBringing[upbringing] }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
   <br />
-  <mat-form-field>
+
+  <mat-form-field appearance="outline">
     <mat-label>Concept</mat-label>
     <mat-select>
-      <mat-option *ngFor="let groupConcept of characterGroupConcept | enumToArray" [value]="characterGroupConcept">
-        {{ groupConcept }}
+      <mat-option *ngFor="let concept of characterConcept | enumToArray" [value]="characterConcept[concept]">
+        {{ characterConcept[concept] }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field
-    ><textarea matInput placeholder="PersonalProblem" [(ngModel)]="character.background.personalProblem"></textarea
-  ></mat-form-field>
-  <mat-form-field> <input matInput placeholder="XP" [(ngModel)]="character.background.xp"/></mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Icon</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let icon of characterIcon | enumToArray" [value]="characterIcon[icon]">
+        {{ characterIcon[icon] }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <label>
+      <textarea matInput placeholder="PersonalProblem" [(ngModel)]="character.background.personalProblem"></textarea>
+    </label>
+  </mat-form-field>
+
+  <br />
+  <mat-form-field appearance="outline">
+    <mat-label>XP free</mat-label>
+    <label>
+      <input matInput type="number" min="0" placeholder="XP free" [(ngModel)]="character.background.xp.free" />
+    </label>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>XP spent</mat-label>
+    <label>
+      <input matInput type="number" min="0" placeholder="XP spent" [(ngModel)]="character.background.xp.spent" />
+    </label>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>XP total</mat-label>
+    <label>
+      <input
+        matInput
+        disabled
+        type="number"
+        placeholder="XP total"
+        value="{{ character.background.xp.free + character.background.xp.spent }}"
+      />
+    </label>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="this.character.gainXP(1)">Gain1XP</button>
 </mat-expansion-panel>

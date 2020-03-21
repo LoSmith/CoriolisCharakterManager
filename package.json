@@ -81,7 +81,6 @@
     "@types/jasminewd2": "^2.0.3",
     "@types/jest": "^24.9.1",
     "@types/lodash": "^4.14.112",
-    "@types/node": "^10.17.14",
     "@types/uuid": "^3.4.7",
     "codelyzer": "^5.2.1",
     "cordova": "^9.0.0",

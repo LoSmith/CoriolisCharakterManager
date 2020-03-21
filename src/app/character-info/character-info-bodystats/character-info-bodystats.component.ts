@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Character } from '@app/shared/character/character';
+import { BodyStatType, getFormulaExplanation } from '@app/shared/character/characterBodyStat';
 
 @Component({
   selector: 'app-character-info-bodystats',
@@ -9,8 +10,10 @@ import { Character } from '@app/shared/character/character';
 export class CharacterInfoBodystatsComponent implements OnInit {
   @Input() character: Character;
   @Input() isPanelExpanded: boolean;
-
-  constructor() {}
+  private getBodyStatExplanation: (bodyStatType: BodyStatType) => string;
+  constructor() {
+    this.getBodyStatExplanation = getFormulaExplanation;
+  }
 
   ngOnInit() {}
 }

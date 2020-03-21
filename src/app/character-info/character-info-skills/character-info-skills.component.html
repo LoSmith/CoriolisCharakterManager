@@ -1,13 +1,13 @@
 <mat-expansion-panel [expanded]="isPanelExpanded">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      Skills
+      <strong>Skills</strong>
     </mat-panel-title>
   </mat-expansion-panel-header>
 
   <mat-placeholder *ngFor="let skill of selectedCharacter.skills; let last = last; let i = index">
-    <mat-form-field>
-      <mat-label>{{ skill.type | titlecase }}</mat-label>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ skill.type }}</mat-label>
       <mat-select [(value)]="skill.value">
         <mat-option [value]="0">0</mat-option>
         <mat-option [value]="1">1</mat-option>

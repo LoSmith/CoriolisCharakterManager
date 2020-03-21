@@ -1,24 +1,22 @@
 <mat-expansion-panel [expanded]="isPanelExpanded">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      Body Stats
+      <strong>Body Stats</strong>
     </mat-panel-title>
   </mat-expansion-panel-header>
   <mat-placeholder *ngFor="let bodystat of character.bodyStats; let last = last; let i = index">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ bodystat.type }} [{{ bodystat.value.minimum }}-{{ bodystat.value.maximum }}]</mat-label>
       <label>
-        <input matInput placeholder="{{ bodystat.type }}" [(ngModel)]="bodystat.value.current" />
-      </label>
-    </mat-form-field>
-    <div *ngIf="(i + 1) % 2 == 0"></div>
-  </mat-placeholder>
-
-  <br />
-
-  <mat-placeholder *ngFor="let bodystat of character.bodyStats; let last = last; let i = index">
-    <mat-form-field>
-      <label>
-        <input matInput placeholder="{{ bodystat.type }}" [(ngModel)]="bodystat.value.current" />
+        <input
+          matInput
+          type="number"
+          min="{{ bodystat.value.minimum }}"
+          max="{{ bodystat.value.maximum }}"
+          placeholder="{{ bodystat.type }}"
+          matTooltip="{{ getBodyStatExplanation(bodystat.type) }}"
+          [(ngModel)]="bodystat.value.current"
+        />
       </label>
     </mat-form-field>
     <div *ngIf="(i + 1) % 2 == 0"></div>
