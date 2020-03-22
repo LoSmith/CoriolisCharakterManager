@@ -1,17 +1,64 @@
 <div class="container">
-  <mat-card class="alignLeft">
-    <h2 class="alignLeft">Character: {{ char.name.firstName }} {{ char.name.nickName }} {{ char.name.sureName }}</h2>
-    <button mat-raised-button color="primary" (click)="onToggleAll()">All Collapsed = {{ !areAllOpen }}</button>
-    <button mat-raised-button color="primary" (click)="onSaveCharacter()">saveChar</button>
+  <mat-card class="alignLeft" id="mat-raised-button-test">
+    <mat-card-header>
+      <div mat-card-avatar class="header-avatar-image"></div>
+      <mat-card-title
+        ><strong>{{ char.name.firstName }} '{{ char.name.nickName }}' {{ char.name.sureName }}</strong></mat-card-title
+      >
+      <mat-card-subtitle
+        ><i
+          >{{ char.background.origin }} {{ char.background.homeSystem }} {{ char.background.concept }}</i
+        ></mat-card-subtitle
+      >
+    </mat-card-header>
     <br />
 
-    <app-character-info-basics [character]="char" [isPanelExpanded]="areAllOpen"></app-character-info-basics>
-    <app-character-info-bodystats [character]="char" [isPanelExpanded]="areAllOpen"></app-character-info-bodystats>
-    <app-character-info-attributes
-      [selectedCharacter]="char"
-      [isPanelExpanded]="areAllOpen"
-    ></app-character-info-attributes>
-    <app-character-info-skills [selectedCharacter]="char" [isPanelExpanded]="areAllOpen"></app-character-info-skills>
-    <app-character-info-items [selectedCharacter]="char" [isPanelExpanded]="areAllOpen"></app-character-info-items>
+    <!--  Basic Information  -->
+    <mat-expansion-panel [expanded]="areAllOpen">
+      <mat-expansion-panel-header>
+        <mat-panel-title><h2>Basic Information</h2></mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-character-info-basics [character]="char"></app-character-info-basics>
+      <br />
+      <button mat-raised-button color="primary" (click)="this.characterGainXP(1)">Gain one XP</button>
+      <button mat-raised-button color="primary" (click)="this.characterSpendXP(5)">Buy an advance</button>
+    </mat-expansion-panel>
+
+    <!--  Body Stats  -->
+    <mat-expansion-panel [expanded]="areAllOpen">
+      <mat-expansion-panel-header>
+        <mat-panel-title><h2>Body Stats</h2></mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-character-info-bodystats [character]="char"></app-character-info-bodystats>
+    </mat-expansion-panel>
+
+    <!--  Attributes  -->
+    <mat-expansion-panel [expanded]="areAllOpen">
+      <mat-expansion-panel-header>
+        <mat-panel-title><h2>Attributes</h2></mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-character-info-attributes [selectedCharacter]="char"></app-character-info-attributes>
+    </mat-expansion-panel>
+
+    <!--  Skills  -->
+    <mat-expansion-panel [expanded]="areAllOpen">
+      <mat-expansion-panel-header>
+        <mat-panel-title><h2>Skills</h2></mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-character-info-skills [selectedCharacter]="char"></app-character-info-skills>
+    </mat-expansion-panel>
+
+    <!--  Items  -->
+    <mat-expansion-panel [expanded]="areAllOpen">
+      <mat-expansion-panel-header>
+        <mat-panel-title><h2>Items</h2></mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-character-info-items [selectedCharacter]="char"></app-character-info-items>
+    </mat-expansion-panel>
+
+    <br />
+
+    <button mat-raised-button color="primary" (click)="onToggleAll()">All Collapsed = {{ !areAllOpen }}</button>
+    <button mat-raised-button color="primary" (click)="onSaveCharacter()">dumpEquipedItems</button>
   </mat-card>
 </div>

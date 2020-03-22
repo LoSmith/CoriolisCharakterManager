@@ -1,7 +1,9 @@
 <h1 mat-dialog-title>{{ data.source.type | titlecase }} dice roll</h1>
 <br />
 
-<h2 [(ngModel)]="data.dice.filter(isSuccess).length">You rolled {{ data.dice.filter(isSuccess).length }} successes</h2>
+<h2 [(ngModel)]="data.dice.filter(isSuccess).length" ngDefaultControl>
+  You rolled {{ data.dice.filter(isSuccess).length }} successes
+</h2>
 <div mat-dialog-content>
   <ul>
     <li *ngFor="let dice of data.dice">Dice roll: {{ dice.diceResult }}</li>

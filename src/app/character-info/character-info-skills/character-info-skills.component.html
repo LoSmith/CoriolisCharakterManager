@@ -1,25 +1,16 @@
-<mat-expansion-panel [expanded]="isPanelExpanded">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      <strong>Skills</strong>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-
-  <mat-placeholder *ngFor="let skill of selectedCharacter.skills; let last = last; let i = index">
-    <mat-form-field appearance="outline">
-      <mat-label>{{ skill.type }}</mat-label>
-      <mat-select [(value)]="skill.value">
-        <mat-option [value]="0">0</mat-option>
-        <mat-option [value]="1">1</mat-option>
-        <mat-option [value]="2">2</mat-option>
-        <mat-option [value]="3">3</mat-option>
-        <mat-option [value]="4">4</mat-option>
-        <mat-option [value]="5">5</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-button-toggle (click)="onDiceRollPressed(skill)">
-      <mat-icon>shuffle</mat-icon>
-    </mat-button-toggle>
-    <div *ngIf="(i + 1) % 4 == 0"></div>
-  </mat-placeholder>
-</mat-expansion-panel>
+<mat-placeholder *ngFor="let skill of selectedCharacter.skills">
+  <mat-form-field appearance="outline">
+    <mat-label>{{ skill.type }}</mat-label>
+    <mat-select [(value)]="skill.value">
+      <mat-option [value]="0">0</mat-option>
+      <mat-option [value]="1">1</mat-option>
+      <mat-option [value]="2">2</mat-option>
+      <mat-option [value]="3">3</mat-option>
+      <mat-option [value]="4">4</mat-option>
+      <mat-option [value]="5">5</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-button-toggle (click)="onDiceRollPressed(skill)">
+    <mat-icon>shuffle</mat-icon>
+  </mat-button-toggle>
+</mat-placeholder>

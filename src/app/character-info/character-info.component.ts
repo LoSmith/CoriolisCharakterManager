@@ -6,13 +6,7 @@ import { BodyStatType } from '@app/shared/character/characterBodyStat';
 import { CharacterOrigin } from '@app/shared/character/characterBackground';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { StarSystem } from '@app/shared/starSystem/system';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { itemStore } from '@app/shared/itemsStore/itemStore';
 
 @Component({
   selector: 'app-character-info',
@@ -20,7 +14,6 @@ export interface PeriodicElement {
   styleUrls: ['./character-info.component.scss']
 })
 export class CharacterInfoComponent {
-  // char: Character = exampleCharacter;
   char: Character = new Character({
     name: {
       firstName: 'Arashar',
@@ -66,26 +59,42 @@ export class CharacterInfoComponent {
       { type: SkillType.Science, value: 1 },
       { type: SkillType.Technology, value: 3 }
     ],
-    equipedItems: [],
-    spaceShipItems: []
+    equipedItems: [
+      itemStore.weapons.melee.knife(),
+      itemStore.weapons.melee.knife(),
+      itemStore.weapons.melee.knife(),
+      itemStore.weapons.melee.knife(),
+      itemStore.quirkyStuff.jostersLangerPenis
+    ],
+    spaceShipItems: [itemStore.quirkyStuff.quantenFluxGenerator]
   });
 
   areAllOpen = false;
   constructor(private _snackBar: MatSnackBar) {}
-
-  onGainXp(): void {
-    const additionalXp = 1;
-    this.char.gainXP(additionalXp);
-  }
 
   onToggleAll() {
     this.areAllOpen = !this.areAllOpen;
   }
 
   onSaveCharacter() {
-    const result = this.char;
-    const snackBarRef = this._snackBar.open(JSON.stringify(result), 'close', {
+    const result = this.char.equipedItems;
+    this._snackBar.open(JSON.stringify(result), 'close', {
       duration: 10000
     });
+  }
+
+  characterGainXP(number: number) {
+    this.char.background.xp.free += number;
+  }
+
+  characterSpendXP(number: number) {
+    if (this.char.background.xp.free < number) {
+      this._snackBar.open(`Not enough free XP to buy an advance`, 'close', {
+        duration: 3000
+      });
+    } else {
+      this.char.background.xp.free -= number;
+      this.char.background.xp.spent += number;
+    }
   }
 }

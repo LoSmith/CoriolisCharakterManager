@@ -1,14 +1,27 @@
-<mat-expansion-panel [expanded]="isPanelExpanded">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      <strong>Items</strong>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-  <ul>
-    <li *ngFor="let item of selectedCharacter.equipedItems; let i = index">
-      ID: {{ item.id }}, Name: {{ item.name }}, Weigth: {{ item.weight }} <br />
-      Influence to Skill: {{ item.skillToBeInfluenced.skillToBeModified }}, Modifier:
-      {{ item.skillToBeInfluenced.modifierValue }}
-    </li>
-  </ul>
-</mat-expansion-panel>
+<div class="example-container">
+  <h3>Equiped Items</h3>
+  <div
+    cdkDropList
+    #equipedItemList="cdkDropList"
+    [cdkDropListData]="selectedCharacter.equipedItems"
+    [cdkDropListConnectedTo]="[spaceshipItemList]"
+    class="example-list"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <div class="example-box" *ngFor="let item of selectedCharacter.equipedItems" cdkDrag>{{ item.name }}</div>
+  </div>
+</div>
+
+<div class="example-container">
+  <h3>Spaceship Items</h3>
+  <div
+    cdkDropList
+    #spaceshipItemList="cdkDropList"
+    [cdkDropListData]="selectedCharacter.spaceShipItems"
+    [cdkDropListConnectedTo]="[equipedItemList]"
+    class="example-list"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <div class="example-box" *ngFor="let item of selectedCharacter.spaceShipItems" cdkDrag>{{ item.name }}</div>
+  </div>
+</div>

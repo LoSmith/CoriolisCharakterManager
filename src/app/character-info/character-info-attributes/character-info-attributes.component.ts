@@ -12,7 +12,6 @@ import { CoriolisRoll } from '@app/shared/coriolis/coriolisRoll';
 })
 export class CharacterInfoAttributesComponent implements OnInit {
   @Input() selectedCharacter: Character;
-  @Input() isPanelExpanded: boolean;
 
   constructor(public diceRollService: DiceRollService) {}
 

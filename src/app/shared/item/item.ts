@@ -1,4 +1,4 @@
-import { ItemFeature, ItemFeatureType } from '@app/shared/item/itemFeature';
+import { ItemFeature } from '@app/shared/item/itemFeature';
 import { SkillType } from '@app/shared/character/characterSkill';
 
 export enum ItemRanges {

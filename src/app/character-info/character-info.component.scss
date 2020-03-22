@@ -1,17 +1,12 @@
 .container {
   text-align: center;
-  padding: 1rem;
-}
-
-.mat-icon {
-  vertical-align: middle;
 }
 
 .alignLeft {
   text-align: left;
 }
 
-.example-headers-align .mat-expansion-panel-header-description {
-  justify-content: space-between;
-  align-items: center;
+.header-avatar-image {
+  background-image: url("https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png");
+  background-size: contain;
 }

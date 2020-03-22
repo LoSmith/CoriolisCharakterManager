@@ -2,21 +2,24 @@ import { ItemRanges, ItemTechTier, ItemWeapon, ItemWeight } from '@app/shared/it
 import { v4 } from 'uuid';
 import { SkillType } from '@app/shared/character/characterSkill';
 
-const knife: ItemWeapon = new ItemWeapon({
-  weight: ItemWeight.normal,
-  name: 'Knife',
-  id: v4(),
-  baseSkill: SkillType.MeleeCombat,
-  bonus: 0,
-  init: 1,
-  damage: 2,
-  crit: 2,
-  range: ItemRanges.close,
-  features: [],
-  techTier: ItemTechTier.primitive,
-  cost: 50,
-  blastPower: 0
-});
+type ItemWeaponConstructorFunction = () => ItemWeapon;
+
+const knife: ItemWeaponConstructorFunction = () =>
+  new ItemWeapon({
+    weight: ItemWeight.normal,
+    name: 'Knife',
+    id: v4(),
+    baseSkill: SkillType.MeleeCombat,
+    bonus: 0,
+    init: 1,
+    damage: 2,
+    crit: 2,
+    range: ItemRanges.close,
+    features: [],
+    techTier: ItemTechTier.primitive,
+    cost: 50,
+    blastPower: 0
+  });
 const sword: ItemWeapon = new ItemWeapon({
   weight: ItemWeight.normal,
   crit: 0,

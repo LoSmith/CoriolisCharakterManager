@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Character } from '@app/shared/character/character';
 import {
   CharacterConcept,
@@ -16,7 +16,6 @@ import { StarSystem } from '@app/shared/starSystem/system';
 })
 export class CharacterInfoBasicsComponent implements OnInit {
   @Input() character: Character;
-  @Input() isPanelExpanded: boolean;
   characterOrigin = CharacterOrigin;
   characterHomeSystem = StarSystem;
   characterUpBringing = CharacterUpbringing;

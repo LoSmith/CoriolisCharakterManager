@@ -13,7 +13,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { environment } from '@env/environment';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
-// import { HomeModule } from './home/home.module';
+import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -32,7 +32,7 @@ import { DiceRollModalComponent } from '@app/dice-roll-modal/dice-roll-modal.com
     CoreModule,
     SharedModule,
     ShellModule,
-    // HomeModule,
+    HomeModule,
     CharacterInfoModule,
     AppRoutingModule // must be imported as the last module as it contains the fallback route
   ],

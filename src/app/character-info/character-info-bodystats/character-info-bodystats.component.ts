@@ -9,8 +9,8 @@ import { BodyStatType, getFormulaExplanation } from '@app/shared/character/chara
 })
 export class CharacterInfoBodystatsComponent implements OnInit {
   @Input() character: Character;
-  @Input() isPanelExpanded: boolean;
   private getBodyStatExplanation: (bodyStatType: BodyStatType) => string;
+
   constructor() {
     this.getBodyStatExplanation = getFormulaExplanation;
   }

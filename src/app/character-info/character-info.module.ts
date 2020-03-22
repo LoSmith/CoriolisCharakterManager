@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { CharacterInfoBodystatsComponent } from './character-info-bodystats/character-info-bodystats.component';
 import { CharacterInfoItemsComponent } from './character-info-items/character-info-items.component';
 import { SharedModule } from '@app/shared';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SharedModule } from '@app/shared';
     MaterialModule,
     CharacterInfoRoutingRoutingModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    DragDropModule
   ]
 })
 export class CharacterInfoModule {}

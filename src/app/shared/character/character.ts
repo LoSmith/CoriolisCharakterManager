@@ -28,10 +28,6 @@ export class Character {
     Object.assign(this, init);
   }
 
-  public gainXP(additionalXp: number) {
-    this.background.xp.free += additionalXp;
-  }
-
   updateBodyStats() {
     updateBodyStats(this);
   }
