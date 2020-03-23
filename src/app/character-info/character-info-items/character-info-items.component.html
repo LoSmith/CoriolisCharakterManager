@@ -1,27 +1,27 @@
-<div class="example-container">
+<div class="item-container">
   <h3>Equiped Items</h3>
   <div
     cdkDropList
     #equipedItemList="cdkDropList"
     [cdkDropListData]="selectedCharacter.equipedItems"
     [cdkDropListConnectedTo]="[spaceshipItemList]"
-    class="example-list"
+    class="item-list"
     (cdkDropListDropped)="drop($event)"
   >
-    <div class="example-box" *ngFor="let item of selectedCharacter.equipedItems" cdkDrag>{{ item.name }}</div>
+    <div class="item-box" *ngFor="let item of selectedCharacter.equipedItems" cdkDrag>{{ item.name }}</div>
   </div>
 </div>
 
-<div class="example-container">
+<div class="item-container">
   <h3>Spaceship Items</h3>
   <div
     cdkDropList
     #spaceshipItemList="cdkDropList"
     [cdkDropListData]="selectedCharacter.spaceShipItems"
     [cdkDropListConnectedTo]="[equipedItemList]"
-    class="example-list"
+    class="item-list"
     (cdkDropListDropped)="drop($event)"
   >
-    <div class="example-box" *ngFor="let item of selectedCharacter.spaceShipItems" cdkDrag>{{ item.name }}</div>
+    <div class="item-box" *ngFor="let item of selectedCharacter.spaceShipItems" cdkDrag>{{ item.name }}</div>
   </div>
 </div>

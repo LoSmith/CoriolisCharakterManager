@@ -14,6 +14,7 @@ import { CharacterInfoBodystatsComponent } from './character-info-bodystats/char
 import { CharacterInfoItemsComponent } from './character-info-items/character-info-items.component';
 import { SharedModule } from '@app/shared';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CharacterInfoCardComponent } from './character-info-card/character-info-card.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     CharacterInfoAttributesComponent,
     CharacterInfoBasicsComponent,
     CharacterInfoBodystatsComponent,
-    CharacterInfoItemsComponent
+    CharacterInfoItemsComponent,
+    CharacterInfoCardComponent
   ],
   imports: [
     CommonModule,

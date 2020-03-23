@@ -5,7 +5,9 @@ version 7.1.0
 
 # Active WIP List:
 
-1. Character class C:\dev\characterManager\src\app\shared
+2. ItemStore
+3. Database integration (mongodb)
+4. refactor project to use monorepo (nx) to use one repo for backend and frontend
 
 # Getting started
 

@@ -1,20 +1,5 @@
-.alignleft {
-  text-align: center;
-}
-
-.header-avatar-image {
-  background-image: url("https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png");
-  background-size: contain;
-}
-
-.container,
-.testClassMargin,
-.mat-expansion-panel {
-  margin: 2px;
-}
-
-.container,
-.testClassMargin,
-.mat-raised-button {
-  margin: 2px;
+.infoComponent {
+  margin: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
 }
